@@ -6,7 +6,7 @@ from functools import reduce
 from typing import Dict, List, Optional
 
 from ..nal import ACT, INHERITANCE, Term, Truth, deduction, expectation, is_statement, normalize, reverse, tier
-from .datasets import Chain, Item
+from .datasets import Chain, Item, _comparable
 
 
 @dataclass(frozen=True)
@@ -106,8 +106,12 @@ def formulation_counts(items: Dict[str, Item], emitted: Dict[str, Final]) -> Dic
         n = normalize(fin.emitted)
         if n == normalize(item.statement):
             counts["canonical"] += 1
+        elif _comparable(fin.emitted) == _comparable(item.statement):
+            counts["equivalent"] += 1
         elif item.swappable and n == normalize(reverse(item.statement)):
             counts["swapped"] += 1
+        elif item.exclusive and item.truth_of(fin.emitted) is False:
+            counts["wrong_value"] += 1  # well-formed answer, factually wrong
         else:
             counts["other"] += 1
         truth = item.truth_of(fin.emitted)

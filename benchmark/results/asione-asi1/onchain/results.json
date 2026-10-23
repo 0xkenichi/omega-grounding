@@ -1,0 +1,226 @@
+{
+  "asione:asi1": {
+    "summary": {
+      "baseline": {
+        "false_act_rate": {
+          "mean": 0.09090909090909091,
+          "sd": 0.0
+        },
+        "true_act_rate": {
+          "mean": 0.8461538461538461,
+          "sd": 0.0
+        },
+        "act_precision": {
+          "mean": 0.9166666666666666,
+          "sd": 0.0
+        },
+        "belief_accuracy": {
+          "mean": 0.9166666666666666,
+          "sd": 0.0
+        },
+        "brier": {
+          "mean": 0.0845145833333333,
+          "sd": 0.0
+        }
+      },
+      "discount": {
+        "false_act_rate": {
+          "mean": 0.09090909090909091,
+          "sd": 0.0
+        },
+        "true_act_rate": {
+          "mean": 0.8461538461538461,
+          "sd": 0.0
+        },
+        "act_precision": {
+          "mean": 0.9166666666666666,
+          "sd": 0.0
+        },
+        "belief_accuracy": {
+          "mean": 0.9166666666666666,
+          "sd": 0.0
+        },
+        "brier": {
+          "mean": 0.08153020833333333,
+          "sd": 0.0
+        }
+      },
+      "grounded": {
+        "false_act_rate": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "true_act_rate": {
+          "mean": 0.9230769230769231,
+          "sd": 0.0
+        },
+        "act_precision": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "belief_accuracy": {
+          "mean": 0.9583333333333334,
+          "sd": 0.0
+        },
+        "brier": {
+          "mean": 0.044431365741658076,
+          "sd": 0.0
+        }
+      }
+    },
+    "formulation": {
+      "equivalent": 4,
+      "belief_graded": 24,
+      "belief_correct": 22,
+      "canonical": 20,
+      "refused": 0,
+      "unparseable": 0
+    },
+    "premises": {
+      "o01": {
+        "emitted": "(--> usdc smart_contract)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> usdc smart_contract)",
+        "verdict": "SUPPORTS"
+      },
+      "o02": {
+        "emitted": "(--> 0xd8da6bf26964af9d7eed9e03e53415d37aa96045 smart_contract)",
+        "truth": "(stv 0.0 0.9)",
+        "grounded": "(--> 0xd8da6bf26964af9d7eed9e03e53415d37aa96045 smart_contract)",
+        "verdict": "REFUTES"
+      },
+      "o03": {
+        "emitted": "(--> usdc ([] upgradeable))",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> usdc ([] upgradeable))",
+        "verdict": "SUPPORTS"
+      },
+      "o04": {
+        "emitted": "(--> weth ([] upgradeable))",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> weth ([] upgradeable))",
+        "verdict": "REFUTES"
+      },
+      "o05": {
+        "emitted": "(--> dai ([] upgradeable))",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> dai ([] upgradeable))",
+        "verdict": "REFUTES"
+      },
+      "o06": {
+        "emitted": "(--> usdt_contract upgradeable_proxy)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> usdt_contract upgradeable_proxy)",
+        "verdict": "REFUTES"
+      },
+      "o07": {
+        "emitted": "(--> steth ([] upgradeable))",
+        "truth": "(stv 0.0 0.9)",
+        "grounded": "(--> steth ([] upgradeable))",
+        "verdict": "REFUTES"
+      },
+      "o08": {
+        "emitted": "(--> aave_v3_pool ([] upgradeable))",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> aave_v3_pool ([] upgradeable))",
+        "verdict": "SUPPORTS"
+      },
+      "o09": {
+        "emitted": "(--> uni_token ([] upgradeable))",
+        "truth": "(stv 0.0 0.9)",
+        "grounded": "(--> uni_token ([] upgradeable))",
+        "verdict": "REFUTES"
+      },
+      "o10": {
+        "emitted": "(--> link ([] upgradeable))",
+        "truth": "(stv 0.0 0.85)",
+        "grounded": "(--> link ([] upgradeable))",
+        "verdict": "REFUTES"
+      },
+      "o11": {
+        "emitted": "(--> (\u00d7 usdc 6) decimals)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> (\u00d7 usdc 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "o12": {
+        "emitted": "(--> (\u00d7 usdc 18) decimals)",
+        "truth": "(stv 0.0 0.98)",
+        "grounded": "(--> (\u00d7 usdc 18) decimals)",
+        "verdict": "REFUTES"
+      },
+      "o13": {
+        "emitted": "(--> (\u00d7 usdt 6) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 usdt 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "o14": {
+        "emitted": "(--> (\u00d7 usdt 18) decimals)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> (\u00d7 usdt 18) decimals)",
+        "verdict": "REFUTES"
+      },
+      "o15": {
+        "emitted": "(--> (\u00d7 dai 18) decimals)",
+        "truth": "(stv 1.0 0.0)",
+        "grounded": "(--> (\u00d7 dai 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "o16": {
+        "emitted": "(--> (\u00d7 dai 6) decimals)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> (\u00d7 dai 6) decimals)",
+        "verdict": "REFUTES"
+      },
+      "o17": {
+        "emitted": "(--> (\u00d7 weth 18) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 weth 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "o18": {
+        "emitted": "(--> (\u00d7 link 18) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 link 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "o19": {
+        "emitted": "(--> (\u00d7 uni 18) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 uni 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "o20": {
+        "emitted": "(--> (\u00d7 weth weth) symbol)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> (\u00d7 weth weth) symbol)",
+        "verdict": "SUPPORTS"
+      },
+      "o21": {
+        "emitted": "(--> (\u00d7 link link) symbol)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> (\u00d7 link link) symbol)",
+        "verdict": "SUPPORTS"
+      },
+      "o22": {
+        "emitted": "(--> (\u00d7 uni uniswap) symbol)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> (\u00d7 uni uniswap) symbol)",
+        "verdict": "REFUTES"
+      },
+      "o23": {
+        "emitted": "(--> (\u00d7 dai dai) symbol)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> (\u00d7 dai dai) symbol)",
+        "verdict": "SUPPORTS"
+      },
+      "o24": {
+        "emitted": "(--> (\u00d7 usdt usdc) symbol)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> (\u00d7 usdt usdc) symbol)",
+        "verdict": "REFUTES"
+      }
+    }
+  }
+}

@@ -64,3 +64,13 @@ def test_grounding_reduces_false_act_on_recorded_sources():
             for s in range(10)]
     mean = {m: sum(r[m]["false_act_rate"] for r in runs) / len(runs) for m in MODES}
     assert mean["grounded"] < mean["discount"] <= mean["baseline"]
+
+
+def test_exclusive_items_grade_other_values_false():
+    items = load_items(DATA, ["onchain_longtail"])
+    item = next(iter(items.values()))
+    _, (_, symbol, value), relation = item.statement
+    other = str(int(value) + 1)
+    assert item.truth_of(item.statement) is True
+    assert item.truth_of(("-->", ("×", symbol, other), relation)) is False
+    assert item.truth_of(("-->", ("×", symbol.upper(), value), relation)) is True

@@ -18,6 +18,11 @@ I have a working prototype of that automation as a plugin, using the existing pl
 
 Verified on SWI-Prolog 10.0.2, PeTTa v1.0.4 and current `main`. The plugin loads through `loadMettaPlugin` and its `ground` skill returns grounded premises. A parity test checks the MeTTa rule against the Python implementation the benchmark uses. Not yet exercised: a full agent run in which the LLM decides to call `ground`.
 
+Measured on a real model, ASI:One `asi1` (one of Omega's own providers), over 151 items:
+- **Textbook facts:** the model is already right, and grounding changes nothing.
+- **Long-tail facts** (ERC-20 decimals): the model was wrong on 28 of 83 and would have acted on 27 of them. Grounding corrected all 28 from the chain, so false premises reaching ACT went from 96% to 0% and belief accuracy from 66% to 100%.
+- **Omega's manual −15-point discount** reduced false ACT on these only to 64%, and it cannot correct a value.
+
 Questions before I open a PR:
 
 1. Would you take this as a plugin under `plugins/grounding`, or prefer it maintained externally?
@@ -25,4 +30,4 @@ Questions before I open a PR:
 3. Should the benchmark live under `Autotests/` or stay separate (it is not an agent-loop test)?
 4. Is there an existing set of premises from the Max Botnick runs that the benchmark could use, instead of or alongside the synthetic noise model?
 
-Results and code: <link to repository>
+Results and code: https://github.com/0xkenichi/omega-grounding

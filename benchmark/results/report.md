@@ -1,6 +1,6 @@
 # Grounding benchmark
 
-Items: 67 (taxonomy, onchain), chains: 12. Sources: replay (sources.json).
+Items: 151 (taxonomy, onchain, onchain_longtail), chains: 12. Sources: replay (sources.json).
 
 ### Synthetic LLM, profile `omega-docs` (factual error 0.45, swap 0.166)
 
@@ -9,16 +9,16 @@ Items: 67 (taxonomy, onchain), chains: 12. Sources: replay (sources.json).
 | Metric | Better | baseline | discount | grounded |
 |---|---|---|---|---|
 | False premises reaching ACT | lower | 0.475 ± 0.094 | 0.475 ± 0.094 | 0.025 ± 0.030 |
-| True premises reaching ACT | higher | 0.563 ± 0.076 | 0.563 ± 0.076 | 0.718 ± 0.054 |
-| Precision of ACT premises | higher | 0.595 ± 0.069 | 0.595 ± 0.069 | 0.980 ± 0.024 |
-| Belief accuracy (f >= 0.5 matches truth) | higher | 0.546 ± 0.065 | 0.546 ± 0.065 | 0.846 ± 0.025 |
-| Brier score of NAL expectation | lower | 0.383 ± 0.053 | 0.333 ± 0.043 | 0.109 ± 0.014 |
+| True premises reaching ACT | higher | 0.554 ± 0.038 | 0.554 ± 0.038 | 0.906 ± 0.018 |
+| Precision of ACT premises | higher | 0.825 ± 0.032 | 0.825 ± 0.032 | 0.995 ± 0.007 |
+| Belief accuracy (f >= 0.5 matches truth) | higher | 0.548 ± 0.034 | 0.548 ± 0.034 | 0.932 ± 0.011 |
+| Brier score of NAL expectation | lower | 0.382 ± 0.028 | 0.333 ± 0.023 | 0.062 ± 0.006 |
 | Swapped relations still acted on | lower | 0.516 ± 0.208 | 0.516 ± 0.208 | 0.026 ± 0.056 |
 | False multi-hop conclusions reaching ACT | lower | 0.075 ± 0.134 | 0.008 ± 0.046 | 0.000 ± 0.000 |
 | True multi-hop conclusions reaching ACT | higher | 0.200 ± 0.142 | 0.058 ± 0.091 | 0.237 ± 0.159 |
 | Mean confidence of true conclusions | higher | 0.224 ± 0.157 | 0.151 ± 0.106 | 0.371 ± 0.080 |
 
-Grounded verdicts (all runs): CORRECTED 138, REFUTES 914, SUPPORTS 958
+Grounded verdicts (all runs): CORRECTED 138, REFUTES 914, SUPPORTS 3478
 
 ### Synthetic LLM, profile `mild` (factual error 0.1, swap 0.05)
 
@@ -27,20 +27,20 @@ Grounded verdicts (all runs): CORRECTED 138, REFUTES 914, SUPPORTS 958
 | Metric | Better | baseline | discount | grounded |
 |---|---|---|---|---|
 | False premises reaching ACT | lower | 0.137 ± 0.070 | 0.137 ± 0.070 | 0.003 ± 0.010 |
-| True premises reaching ACT | higher | 0.899 ± 0.045 | 0.899 ± 0.045 | 0.828 ± 0.036 |
-| Precision of ACT premises | higher | 0.910 ± 0.047 | 0.910 ± 0.047 | 0.998 ± 0.008 |
-| Belief accuracy (f >= 0.5 matches truth) | higher | 0.884 ± 0.033 | 0.884 ± 0.033 | 0.915 ± 0.021 |
-| Brier score of NAL expectation | lower | 0.105 ± 0.027 | 0.106 ± 0.022 | 0.051 ± 0.008 |
+| True premises reaching ACT | higher | 0.906 ± 0.022 | 0.906 ± 0.022 | 0.943 ± 0.012 |
+| Precision of ACT premises | higher | 0.969 ± 0.017 | 0.969 ± 0.017 | 0.999 ± 0.002 |
+| Belief accuracy (f >= 0.5 matches truth) | higher | 0.898 ± 0.022 | 0.898 ± 0.022 | 0.962 ± 0.009 |
+| Brier score of NAL expectation | lower | 0.094 ± 0.018 | 0.097 ± 0.015 | 0.026 ± 0.004 |
 | Swapped relations still acted on | lower | 0.565 ± 0.364 | 0.565 ± 0.364 | 0.013 ± 0.065 |
 | False multi-hop conclusions reaching ACT | lower | 0.050 ± 0.102 | 0.008 ± 0.046 | 0.000 ± 0.000 |
 | True multi-hop conclusions reaching ACT | higher | 0.713 ± 0.151 | 0.146 ± 0.109 | 0.621 ± 0.111 |
 | Mean confidence of true conclusions | higher | 0.535 ± 0.079 | 0.352 ± 0.052 | 0.519 ± 0.032 |
 
-Grounded verdicts (all runs): CORRECTED 43, REFUTES 919, SUPPORTS 1048
+Grounded verdicts (all runs): CORRECTED 43, REFUTES 919, SUPPORTS 3568
 
 ### Source coverage on canonical statements
 
-Agrees 61, disagrees 6, unknown 0.
+Agrees 145, disagrees 6, unknown 0.
 
 | Item | Statement | Gold | Verdict | Source agrees |
 |---|---|---|---|---|
@@ -111,3 +111,87 @@ Agrees 61, disagrees 6, unknown 0.
 | o22 | `(--> (× uni UNISWAP) symbol)` | False | REFUTES | yes |
 | o23 | `(--> (× dai DAI) symbol)` | True | SUPPORTS | yes |
 | o24 | `(--> (× usdt USDC) symbol)` | False | REFUTES | yes |
+| L01 | `(--> (× ach 8) decimals)` | True | SUPPORTS | yes |
+| L02 | `(--> (× acu 12) decimals)` | True | SUPPORTS | yes |
+| L03 | `(--> (× alice 6) decimals)` | True | SUPPORTS | yes |
+| L04 | `(--> (× ast 4) decimals)` | True | SUPPORTS | yes |
+| L05 | `(--> (× audd 6) decimals)` | True | SUPPORTS | yes |
+| L06 | `(--> (× ausd 6) decimals)` | True | SUPPORTS | yes |
+| L07 | `(--> (× axl 6) decimals)` | True | SUPPORTS | yes |
+| L08 | `(--> (× bdx 9) decimals)` | True | SUPPORTS | yes |
+| L09 | `(--> (× bitcoin 8) decimals)` | True | SUPPORTS | yes |
+| L10 | `(--> (× cbbtc 8) decimals)` | True | SUPPORTS | yes |
+| L11 | `(--> (× chr 6) decimals)` | True | SUPPORTS | yes |
+| L12 | `(--> (× coval 8) decimals)` | True | SUPPORTS | yes |
+| L13 | `(--> (× cro 8) decimals)` | True | SUPPORTS | yes |
+| L14 | `(--> (× cube 8) decimals)` | True | SUPPORTS | yes |
+| L15 | `(--> (× cvc 8) decimals)` | True | SUPPORTS | yes |
+| L16 | `(--> (× dar 6) decimals)` | True | SUPPORTS | yes |
+| L17 | `(--> (× dent 8) decimals)` | True | SUPPORTS | yes |
+| L18 | `(--> (× dovu 8) decimals)` | True | SUPPORTS | yes |
+| L19 | `(--> (× elizaos 9) decimals)` | True | SUPPORTS | yes |
+| L20 | `(--> (× es 6) decimals)` | True | SUPPORTS | yes |
+| L21 | `(--> (× eurc 6) decimals)` | True | SUPPORTS | yes |
+| L22 | `(--> (× europ 6) decimals)` | True | SUPPORTS | yes |
+| L23 | `(--> (× eurq 6) decimals)` | True | SUPPORTS | yes |
+| L24 | `(--> (× eurr 6) decimals)` | True | SUPPORTS | yes |
+| L25 | `(--> (× floki 9) decimals)` | True | SUPPORTS | yes |
+| L26 | `(--> (× folks 6) decimals)` | True | SUPPORTS | yes |
+| L27 | `(--> (× frnt 6) decimals)` | True | SUPPORTS | yes |
+| L28 | `(--> (× gala 8) decimals)` | True | SUPPORTS | yes |
+| L29 | `(--> (× gusd 2) decimals)` | True | SUPPORTS | yes |
+| L30 | `(--> (× gyen 6) decimals)` | True | SUPPORTS | yes |
+| L31 | `(--> (× kbtc 8) decimals)` | True | SUPPORTS | yes |
+| L32 | `(--> (× kuji 6) decimals)` | True | SUPPORTS | yes |
+| L33 | `(--> (× move 8) decimals)` | True | SUPPORTS | yes |
+| L34 | `(--> (× mtl 8) decimals)` | True | SUPPORTS | yes |
+| L35 | `(--> (× mxnb 6) decimals)` | True | SUPPORTS | yes |
+| L36 | `(--> (× neiro 9) decimals)` | True | SUPPORTS | yes |
+| L37 | `(--> (× orn 8) decimals)` | True | SUPPORTS | yes |
+| L38 | `(--> (× ousd 6) decimals)` | True | SUPPORTS | yes |
+| L39 | `(--> (× powr 6) decimals)` | True | SUPPORTS | yes |
+| L40 | `(--> (× pro 8) decimals)` | True | SUPPORTS | yes |
+| L41 | `(--> (× pyusd 6) decimals)` | True | SUPPORTS | yes |
+| L42 | `(--> (× qcad 6) decimals)` | True | SUPPORTS | yes |
+| L43 | `(--> (× qrdo 8) decimals)` | True | SUPPORTS | yes |
+| L44 | `(--> (× rlc 9) decimals)` | True | SUPPORTS | yes |
+| L45 | `(--> (× shx 7) decimals)` | True | SUPPORTS | yes |
+| L46 | `(--> (× slay 6) decimals)` | True | SUPPORTS | yes |
+| L47 | `(--> (× slp 0) decimals)` | True | SUPPORTS | yes |
+| L48 | `(--> (× sofid 6) decimals)` | True | SUPPORTS | yes |
+| L49 | `(--> (× sol 9) decimals)` | True | SUPPORTS | yes |
+| L50 | `(--> (× spx 8) decimals)` | True | SUPPORTS | yes |
+| L51 | `(--> (× storj 8) decimals)` | True | SUPPORTS | yes |
+| L52 | `(--> (× swftc 8) decimals)` | True | SUPPORTS | yes |
+| L53 | `(--> (× tel 2) decimals)` | True | SUPPORTS | yes |
+| L54 | `(--> (× time 8) decimals)` | True | SUPPORTS | yes |
+| L55 | `(--> (× tlm 4) decimals)` | True | SUPPORTS | yes |
+| L56 | `(--> (× token 9) decimals)` | True | SUPPORTS | yes |
+| L57 | `(--> (× tru 8) decimals)` | True | SUPPORTS | yes |
+| L58 | `(--> (× usat 6) decimals)` | True | SUPPORTS | yes |
+| L59 | `(--> (× usdg 6) decimals)` | True | SUPPORTS | yes |
+| L60 | `(--> (× usdq 6) decimals)` | True | SUPPORTS | yes |
+| L61 | `(--> (× usdr 6) decimals)` | True | SUPPORTS | yes |
+| L62 | `(--> (× verona 6) decimals)` | True | SUPPORTS | yes |
+| L63 | `(--> (× vgx 8) decimals)` | True | SUPPORTS | yes |
+| L64 | `(--> (× wanlog 12) decimals)` | True | SUPPORTS | yes |
+| L65 | `(--> (× wbt 8) decimals)` | True | SUPPORTS | yes |
+| L66 | `(--> (× wbtc 8) decimals)` | True | SUPPORTS | yes |
+| L67 | `(--> (× wfb 8) decimals)` | True | SUPPORTS | yes |
+| L68 | `(--> (× xaut 6) decimals)` | True | SUPPORTS | yes |
+| L69 | `(--> (× xsgd 6) decimals)` | True | SUPPORTS | yes |
+| L70 | `(--> (× lpt 18) decimals)` | True | SUPPORTS | yes |
+| L71 | `(--> (× yb 18) decimals)` | True | SUPPORTS | yes |
+| L72 | `(--> (× mezo 18) decimals)` | True | SUPPORTS | yes |
+| L73 | `(--> (× almanak 18) decimals)` | True | SUPPORTS | yes |
+| L74 | `(--> (× ev 18) decimals)` | True | SUPPORTS | yes |
+| L75 | `(--> (× planck 18) decimals)` | True | SUPPORTS | yes |
+| L76 | `(--> (× omni 18) decimals)` | True | SUPPORTS | yes |
+| L77 | `(--> (× matic 18) decimals)` | True | SUPPORTS | yes |
+| L78 | `(--> (× zrx 18) decimals)` | True | SUPPORTS | yes |
+| L79 | `(--> (× gno 18) decimals)` | True | SUPPORTS | yes |
+| L80 | `(--> (× ogn 18) decimals)` | True | SUPPORTS | yes |
+| L81 | `(--> (× kernel 18) decimals)` | True | SUPPORTS | yes |
+| L82 | `(--> (× rgt 18) decimals)` | True | SUPPORTS | yes |
+| L83 | `(--> (× drep 18) decimals)` | True | SUPPORTS | yes |
+| L84 | `(--> (× pepecoin 18) decimals)` | True | SUPPORTS | yes |

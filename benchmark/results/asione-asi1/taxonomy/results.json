@@ -1,0 +1,370 @@
+{
+  "asione:asi1": {
+    "summary": {
+      "baseline": {
+        "false_act_rate": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "true_act_rate": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "act_precision": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "belief_accuracy": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "brier": {
+          "mean": 0.006229268292682926,
+          "sd": 0.0
+        },
+        "chain_false_act_rate": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "chain_true_act_rate": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "chain_true_mean_confidence": {
+          "mean": 0.9607187500000001,
+          "sd": 0.0
+        }
+      },
+      "discount": {
+        "false_act_rate": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "true_act_rate": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "act_precision": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "belief_accuracy": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "brier": {
+          "mean": 0.01307073170731708,
+          "sd": 0.0
+        },
+        "chain_false_act_rate": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "chain_true_act_rate": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "chain_true_mean_confidence": {
+          "mean": 0.6774999999999999,
+          "sd": 0.0
+        }
+      },
+      "grounded": {
+        "false_act_rate": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "true_act_rate": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "act_precision": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "belief_accuracy": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "brier": {
+          "mean": 0.015606686999561697,
+          "sd": 0.0
+        },
+        "chain_false_act_rate": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "chain_true_act_rate": {
+          "mean": 0.875,
+          "sd": 0.0
+        },
+        "chain_true_mean_confidence": {
+          "mean": 0.6999094080919442,
+          "sd": 0.0
+        }
+      }
+    },
+    "formulation": {
+      "canonical": 41,
+      "belief_graded": 41,
+      "belief_correct": 41,
+      "other": 1,
+      "refused": 0,
+      "unparseable": 0
+    },
+    "premises": {
+      "t01": {
+        "emitted": "(--> dolphin mammal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> dolphin mammal)",
+        "verdict": "SUPPORTS"
+      },
+      "t02": {
+        "emitted": "(--> whale mammal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> whale mammal)",
+        "verdict": "SUPPORTS"
+      },
+      "t03": {
+        "emitted": "(--> bat mammal)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> bat mammal)",
+        "verdict": "SUPPORTS"
+      },
+      "t04": {
+        "emitted": "(--> penguin bird)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> penguin bird)",
+        "verdict": "SUPPORTS"
+      },
+      "t05": {
+        "emitted": "(--> ostrich bird)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> ostrich bird)",
+        "verdict": "SUPPORTS"
+      },
+      "t06": {
+        "emitted": "(--> shark fish)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> shark fish)",
+        "verdict": "SUPPORTS"
+      },
+      "t07": {
+        "emitted": "(--> salmon fish)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> salmon fish)",
+        "verdict": "SUPPORTS"
+      },
+      "t08": {
+        "emitted": "(--> frog amphibian)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> frog amphibian)",
+        "verdict": "SUPPORTS"
+      },
+      "t09": {
+        "emitted": "(--> snake reptile)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> snake reptile)",
+        "verdict": "SUPPORTS"
+      },
+      "t10": {
+        "emitted": "(--> spider arachnid)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> spider arachnid)",
+        "verdict": "SUPPORTS"
+      },
+      "t11": {
+        "emitted": "(--> mammal animal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> mammal animal)",
+        "verdict": "SUPPORTS"
+      },
+      "t12": {
+        "emitted": "(--> bird animal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> bird animal)",
+        "verdict": "SUPPORTS"
+      },
+      "t13": {
+        "emitted": "(--> reptile animal)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> reptile animal)",
+        "verdict": "REFUTES"
+      },
+      "t14": {
+        "emitted": "(--> mammal synapsid)",
+        "truth": "(stv 1.0 0.97)",
+        "grounded": "(--> mammal synapsid)",
+        "verdict": "SUPPORTS"
+      },
+      "t15": {
+        "emitted": "(--> insects hexapod)",
+        "truth": "(stv 1.0 0.97)",
+        "grounded": "(--> insects hexapod)",
+        "verdict": "REFUTES"
+      },
+      "t16": {
+        "emitted": "(--> bird dinosaur)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> bird dinosaur)",
+        "verdict": "SUPPORTS"
+      },
+      "t17": {
+        "emitted": "(--> dinosaur reptile)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> dinosaur reptile)",
+        "verdict": "REFUTES"
+      },
+      "t18": {
+        "emitted": "(--> cat mammal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> cat mammal)",
+        "verdict": "SUPPORTS"
+      },
+      "t19": {
+        "emitted": "(--> dog mammal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> dog mammal)",
+        "verdict": "SUPPORTS"
+      },
+      "t20": {
+        "emitted": "(--> oak tree)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> oak tree)",
+        "verdict": "REFUTES"
+      },
+      "t21": {
+        "emitted": "(--> earth planet)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> earth planet)",
+        "verdict": "SUPPORTS"
+      },
+      "t22": {
+        "emitted": "(--> mars planet)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> mars planet)",
+        "verdict": "SUPPORTS"
+      },
+      "t23": {
+        "emitted": "(--> sun star)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> sun star)",
+        "verdict": "SUPPORTS"
+      },
+      "t24": {
+        "emitted": "(--> violin string_instrument)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> violin string_instrument)",
+        "verdict": "SUPPORTS"
+      },
+      "t25": {
+        "emitted": "(--> guitar string_instrument)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> guitar string_instrument)",
+        "verdict": "SUPPORTS"
+      },
+      "t26": {
+        "emitted": "(--> string_instrument musical_instrument)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> string_instrument musical_instrument)",
+        "verdict": "SUPPORTS"
+      },
+      "t27": {
+        "emitted": "(--> planet astronomical_object)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> planet astronomical_object)",
+        "verdict": "SUPPORTS"
+      },
+      "t28": {
+        "emitted": "(--> iron metal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> iron metal)",
+        "verdict": "REFUTES"
+      },
+      "t29": {
+        "emitted": "(--> gold metal)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> gold metal)",
+        "verdict": "SUPPORTS"
+      },
+      "f01": {
+        "emitted": "(--> whale fish)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> whale fish)",
+        "verdict": "REFUTES"
+      },
+      "f02": {
+        "emitted": "(--> bat bird)",
+        "truth": "(stv 0.0 0.98)",
+        "grounded": "(--> bat bird)",
+        "verdict": "REFUTES"
+      },
+      "f03": {
+        "emitted": "(--> penguin mammal)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> penguin mammal)",
+        "verdict": "REFUTES"
+      },
+      "f04": {
+        "emitted": "(--> spider insect)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> spider insect)",
+        "verdict": "REFUTES"
+      },
+      "f05": {
+        "emitted": "(--> dolphin fish)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> dolphin fish)",
+        "verdict": "REFUTES"
+      },
+      "f06": {
+        "emitted": "(--> snake amphibian)",
+        "truth": "(stv 0.0 0.98)",
+        "grounded": "(--> snake amphibian)",
+        "verdict": "REFUTES"
+      },
+      "f07": {
+        "emitted": "(--> shark mammal)",
+        "truth": "(stv 0.0 0.0)",
+        "grounded": "(--> shark mammal)",
+        "verdict": "REFUTES"
+      },
+      "f08": {
+        "emitted": "(--> sun planet)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> sun planet)",
+        "verdict": "REFUTES"
+      },
+      "f09": {
+        "emitted": "(--> moon planet)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> moon planet)",
+        "verdict": "REFUTES"
+      },
+      "f10": {
+        "emitted": "(--> violin keyboard_instrument)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> violin keyboard_instrument)",
+        "verdict": "REFUTES"
+      },
+      "f11": {
+        "emitted": "(--> frog reptile)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> frog reptile)",
+        "verdict": "REFUTES"
+      },
+      "f13": {
+        "emitted": "(--> mars star)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> mars star)",
+        "verdict": "REFUTES"
+      },
+      "f14": {
+        "emitted": "(--> iron noble_gas)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> iron noble_gas)",
+        "verdict": "REFUTES"
+      }
+    }
+  }
+}

@@ -4,6 +4,7 @@
     omega-ground-bench --transport record       # refresh the cassette from live sources
     omega-ground-bench --llm claude --transport record   # real LLM premises (API cost)
     omega-ground-bench --llm ollama --model qwen2.5:7b --transport record   # local model, no key
+    ASIONE_API_KEY=... omega-ground-bench --llm asione --transport record    # ASI:One
 """
 
 from __future__ import annotations
@@ -18,7 +19,7 @@ from ..evidence import DEFAULT_LLM_DISCOUNT, discount
 from ..grounder import Grounder, default_grounder
 from ..nal import fmt, reverse
 from .datasets import Chain, Item, load_chains, load_items
-from .llm import PROFILES, ClaudeAtomizer, NoiseModel, OllamaAtomizer, SyntheticLLM
+from .llm import PROFILES, CachedLLM, ClaudeAtomizer, NoiseModel, OllamaAtomizer, OpenAICompatAtomizer, SyntheticLLM
 from .metrics import Final, chain_metrics, formulation_counts, premise_metrics, verdict_counts
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -95,7 +96,8 @@ def to_markdown(title: str, summary: Dict[str, dict], n_runs: int, verdicts: Dic
 
 def formulation_markdown(counts: Dict[str, int], n_items: int) -> str:
     """How the LLM wrote each premise: the failure surface Omega's report measures."""
-    rows = [("Canonical statement", "canonical"), ("Relation swapped", "swapped"),
+    rows = [("Canonical statement", "canonical"), ("Equivalent phrasing (e.g. smart_contract)", "equivalent"),
+            ("Relation swapped", "swapped"), ("Well-formed answer with the wrong value", "wrong_value"),
             ("Other form (granularity, copula, naming)", "other"),
             ("Unparseable output", "unparseable"), ("Refused", "refused")]
     lines = ["### Premise formulation by the LLM", "", "| Outcome | Count | Share |", "|---|---|---|"]
@@ -132,16 +134,17 @@ def main(argv=None) -> None:
     parser.add_argument("--transport", choices=["replay", "record", "live"], default="replay")
     parser.add_argument("--cassette", type=Path, default=ROOT / "benchmark" / "cassettes" / "sources.json")
     parser.add_argument("--datasets", type=Path, default=ROOT / "benchmark" / "datasets")
-    parser.add_argument("--domains", nargs="+", default=["taxonomy", "onchain"])
-    parser.add_argument("--llm", choices=["synthetic", "claude", "ollama"], default="synthetic")
+    parser.add_argument("--domains", nargs="+", default=["taxonomy", "onchain", "onchain_longtail"])
+    parser.add_argument("--llm", choices=["synthetic", "claude", "ollama", "asione"], default="synthetic")
     parser.add_argument("--profiles", nargs="+", choices=sorted(PROFILES), default=["omega-docs", "mild"])
     parser.add_argument("--factual-error-rate", type=float, help="custom synthetic profile")
     parser.add_argument("--swap-rate", type=float, help="custom synthetic profile")
     parser.add_argument("--seeds", type=int, default=30)
-    parser.add_argument("--model", help="default: claude-opus-5-5 (claude), qwen2.5:7b (ollama)")
+    parser.add_argument("--model", help="default: claude-opus-5-5 (claude), qwen2.5:7b (ollama), asi1 (asione; asi1-ultra needs a paid tier)")
     parser.add_argument("--ollama-url", default="http://127.0.0.1:11434")
     parser.add_argument("--effort", default="medium")
     parser.add_argument("--out", type=Path, default=ROOT / "benchmark" / "results")
+    parser.add_argument("--premises", type=Path, help="real-LLM answer cache (default: OUT/premises.jsonl)")
     args = parser.parse_args(argv)
 
     if args.llm != "synthetic" and args.transport == "replay":
@@ -165,10 +168,18 @@ def main(argv=None) -> None:
         if args.llm == "claude":
             llm = ClaudeAtomizer(args.model or "claude-opus-5-5", args.effort)
             title = f"LLM: {llm.name} (effort {args.effort})"
+        elif args.llm == "asione":
+            llm = OpenAICompatAtomizer(args.model or "asi1")
+            title = f"LLM: {llm.name} (ASI:One, temperature 0)"
         else:
             llm = OllamaAtomizer(args.model or "qwen2.5:7b", args.ollama_url)
             title = f"LLM: {llm.name} (temperature 0)"
-        finals = run_pipelines(llm, items, grounder)
+        llm = CachedLLM(llm, args.premises or args.out / "premises.jsonl")
+        try:
+            finals = run_pipelines(llm, items, grounder)
+        finally:
+            grounder.close()  # keep live lookups recorded so far
+            llm.save()
         run = score(items, chains, finals)
         formulation = formulation_counts(items, finals["baseline"])
         formulation.update(refused=llm.refusals, unparseable=llm.unparseable)

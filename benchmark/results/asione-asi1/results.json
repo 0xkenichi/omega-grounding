@@ -1,0 +1,1020 @@
+{
+  "asione:asi1": {
+    "summary": {
+      "baseline": {
+        "false_act_rate": {
+          "mean": 0.5384615384615384,
+          "sd": 0.0
+        },
+        "true_act_rate": {
+          "mean": 0.9583333333333334,
+          "sd": 0.0
+        },
+        "act_precision": {
+          "mean": 0.7666666666666667,
+          "sd": 0.0
+        },
+        "belief_accuracy": {
+          "mean": 0.7972972972972973,
+          "sd": 0.0
+        },
+        "brier": {
+          "mean": 0.16296739864864868,
+          "sd": 0.0
+        },
+        "chain_false_act_rate": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "chain_true_act_rate": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "chain_true_mean_confidence": {
+          "mean": 0.9607187500000001,
+          "sd": 0.0
+        }
+      },
+      "discount": {
+        "false_act_rate": {
+          "mean": 0.36538461538461536,
+          "sd": 0.0
+        },
+        "true_act_rate": {
+          "mean": 0.8958333333333334,
+          "sd": 0.0
+        },
+        "act_precision": {
+          "mean": 0.819047619047619,
+          "sd": 0.0
+        },
+        "belief_accuracy": {
+          "mean": 0.7972972972972973,
+          "sd": 0.0
+        },
+        "brier": {
+          "mean": 0.14786604729729733,
+          "sd": 0.0
+        },
+        "chain_false_act_rate": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "chain_true_act_rate": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "chain_true_mean_confidence": {
+          "mean": 0.6774999999999999,
+          "sd": 0.0
+        }
+      },
+      "grounded": {
+        "false_act_rate": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "true_act_rate": {
+          "mean": 0.9919354838709677,
+          "sd": 0.0
+        },
+        "act_precision": {
+          "mean": 1.0,
+          "sd": 0.0
+        },
+        "belief_accuracy": {
+          "mean": 0.9932432432432432,
+          "sd": 0.0
+        },
+        "brier": {
+          "mean": 0.012606610597603337,
+          "sd": 0.0
+        },
+        "chain_false_act_rate": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "chain_true_act_rate": {
+          "mean": 0.875,
+          "sd": 0.0
+        },
+        "chain_true_mean_confidence": {
+          "mean": 0.6999094080919442,
+          "sd": 0.0
+        }
+      }
+    },
+    "formulation": {
+      "canonical": 113,
+      "belief_graded": 148,
+      "belief_correct": 118,
+      "other": 2,
+      "equivalent": 7,
+      "wrong_value": 28,
+      "refused": 0,
+      "unparseable": 0
+    },
+    "premises": {
+      "t01": {
+        "emitted": "(--> dolphin mammal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> dolphin mammal)",
+        "verdict": "SUPPORTS"
+      },
+      "t02": {
+        "emitted": "(--> whale mammal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> whale mammal)",
+        "verdict": "SUPPORTS"
+      },
+      "t03": {
+        "emitted": "(--> bat mammal)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> bat mammal)",
+        "verdict": "SUPPORTS"
+      },
+      "t04": {
+        "emitted": "(--> penguin bird)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> penguin bird)",
+        "verdict": "SUPPORTS"
+      },
+      "t05": {
+        "emitted": "(--> ostrich bird)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> ostrich bird)",
+        "verdict": "SUPPORTS"
+      },
+      "t06": {
+        "emitted": "(--> shark fish)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> shark fish)",
+        "verdict": "SUPPORTS"
+      },
+      "t07": {
+        "emitted": "(--> salmon fish)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> salmon fish)",
+        "verdict": "SUPPORTS"
+      },
+      "t08": {
+        "emitted": "(--> frog amphibian)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> frog amphibian)",
+        "verdict": "SUPPORTS"
+      },
+      "t09": {
+        "emitted": "(--> snake reptile)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> snake reptile)",
+        "verdict": "SUPPORTS"
+      },
+      "t10": {
+        "emitted": "(--> spider arachnid)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> spider arachnid)",
+        "verdict": "SUPPORTS"
+      },
+      "t11": {
+        "emitted": "(--> mammal animal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> mammal animal)",
+        "verdict": "SUPPORTS"
+      },
+      "t12": {
+        "emitted": "(--> bird animal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> bird animal)",
+        "verdict": "SUPPORTS"
+      },
+      "t13": {
+        "emitted": "(--> reptile animal)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> reptile animal)",
+        "verdict": "REFUTES"
+      },
+      "t14": {
+        "emitted": "(--> mammal synapsid)",
+        "truth": "(stv 1.0 0.97)",
+        "grounded": "(--> mammal synapsid)",
+        "verdict": "SUPPORTS"
+      },
+      "t15": {
+        "emitted": "(--> insects hexapod)",
+        "truth": "(stv 1.0 0.97)",
+        "grounded": "(--> insects hexapod)",
+        "verdict": "REFUTES"
+      },
+      "t16": {
+        "emitted": "(--> bird dinosaur)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> bird dinosaur)",
+        "verdict": "SUPPORTS"
+      },
+      "t17": {
+        "emitted": "(--> dinosaur reptile)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> dinosaur reptile)",
+        "verdict": "REFUTES"
+      },
+      "t18": {
+        "emitted": "(--> cat mammal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> cat mammal)",
+        "verdict": "SUPPORTS"
+      },
+      "t19": {
+        "emitted": "(--> dog mammal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> dog mammal)",
+        "verdict": "SUPPORTS"
+      },
+      "t20": {
+        "emitted": "(--> oak tree)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> oak tree)",
+        "verdict": "REFUTES"
+      },
+      "t21": {
+        "emitted": "(--> earth planet)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> earth planet)",
+        "verdict": "SUPPORTS"
+      },
+      "t22": {
+        "emitted": "(--> mars planet)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> mars planet)",
+        "verdict": "SUPPORTS"
+      },
+      "t23": {
+        "emitted": "(--> sun star)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> sun star)",
+        "verdict": "SUPPORTS"
+      },
+      "t24": {
+        "emitted": "(--> violin string_instrument)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> violin string_instrument)",
+        "verdict": "SUPPORTS"
+      },
+      "t25": {
+        "emitted": "(--> guitar string_instrument)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> guitar string_instrument)",
+        "verdict": "SUPPORTS"
+      },
+      "t26": {
+        "emitted": "(--> string_instrument musical_instrument)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> string_instrument musical_instrument)",
+        "verdict": "SUPPORTS"
+      },
+      "t27": {
+        "emitted": "(--> planet astronomical_object)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> planet astronomical_object)",
+        "verdict": "SUPPORTS"
+      },
+      "t28": {
+        "emitted": "(--> iron metal)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> iron metal)",
+        "verdict": "REFUTES"
+      },
+      "t29": {
+        "emitted": "(--> gold metal)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> gold metal)",
+        "verdict": "SUPPORTS"
+      },
+      "f01": {
+        "emitted": "(--> whale fish)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> whale fish)",
+        "verdict": "REFUTES"
+      },
+      "f02": {
+        "emitted": "(--> bat bird)",
+        "truth": "(stv 0.0 0.98)",
+        "grounded": "(--> bat bird)",
+        "verdict": "REFUTES"
+      },
+      "f03": {
+        "emitted": "(--> penguin mammal)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> penguin mammal)",
+        "verdict": "REFUTES"
+      },
+      "f04": {
+        "emitted": "(--> spider insect)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> spider insect)",
+        "verdict": "REFUTES"
+      },
+      "f05": {
+        "emitted": "(--> dolphin fish)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> dolphin fish)",
+        "verdict": "REFUTES"
+      },
+      "f06": {
+        "emitted": "(--> snake amphibian)",
+        "truth": "(stv 0.0 0.98)",
+        "grounded": "(--> snake amphibian)",
+        "verdict": "REFUTES"
+      },
+      "f07": {
+        "emitted": "(--> shark mammal)",
+        "truth": "(stv 0.0 0.0)",
+        "grounded": "(--> shark mammal)",
+        "verdict": "REFUTES"
+      },
+      "f08": {
+        "emitted": "(--> sun planet)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> sun planet)",
+        "verdict": "REFUTES"
+      },
+      "f09": {
+        "emitted": "(--> moon planet)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> moon planet)",
+        "verdict": "REFUTES"
+      },
+      "f10": {
+        "emitted": "(--> violin keyboard_instrument)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> violin keyboard_instrument)",
+        "verdict": "REFUTES"
+      },
+      "f11": {
+        "emitted": "(--> frog reptile)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> frog reptile)",
+        "verdict": "REFUTES"
+      },
+      "f13": {
+        "emitted": "(--> mars star)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> mars star)",
+        "verdict": "REFUTES"
+      },
+      "f14": {
+        "emitted": "(--> iron noble_gas)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> iron noble_gas)",
+        "verdict": "REFUTES"
+      },
+      "o01": {
+        "emitted": "(--> usdc smart_contract)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> usdc smart_contract)",
+        "verdict": "SUPPORTS"
+      },
+      "o02": {
+        "emitted": "(--> 0xd8da6bf26964af9d7eed9e03e53415d37aa96045 smart_contract)",
+        "truth": "(stv 0.0 0.9)",
+        "grounded": "(--> 0xd8da6bf26964af9d7eed9e03e53415d37aa96045 smart_contract)",
+        "verdict": "REFUTES"
+      },
+      "o03": {
+        "emitted": "(--> usdc ([] upgradeable))",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> usdc ([] upgradeable))",
+        "verdict": "SUPPORTS"
+      },
+      "o04": {
+        "emitted": "(--> weth ([] upgradeable))",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> weth ([] upgradeable))",
+        "verdict": "REFUTES"
+      },
+      "o05": {
+        "emitted": "(--> dai ([] upgradeable))",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> dai ([] upgradeable))",
+        "verdict": "REFUTES"
+      },
+      "o06": {
+        "emitted": "(--> usdt_contract upgradeable_proxy)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> usdt_contract upgradeable_proxy)",
+        "verdict": "REFUTES"
+      },
+      "o07": {
+        "emitted": "(--> steth ([] upgradeable))",
+        "truth": "(stv 0.0 0.9)",
+        "grounded": "(--> steth ([] upgradeable))",
+        "verdict": "REFUTES"
+      },
+      "o08": {
+        "emitted": "(--> aave_v3_pool ([] upgradeable))",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> aave_v3_pool ([] upgradeable))",
+        "verdict": "SUPPORTS"
+      },
+      "o09": {
+        "emitted": "(--> uni_token ([] upgradeable))",
+        "truth": "(stv 0.0 0.9)",
+        "grounded": "(--> uni_token ([] upgradeable))",
+        "verdict": "REFUTES"
+      },
+      "o10": {
+        "emitted": "(--> link ([] upgradeable))",
+        "truth": "(stv 0.0 0.85)",
+        "grounded": "(--> link ([] upgradeable))",
+        "verdict": "REFUTES"
+      },
+      "o11": {
+        "emitted": "(--> (\u00d7 usdc 6) decimals)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> (\u00d7 usdc 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "o12": {
+        "emitted": "(--> (\u00d7 usdc 18) decimals)",
+        "truth": "(stv 0.0 0.98)",
+        "grounded": "(--> (\u00d7 usdc 18) decimals)",
+        "verdict": "REFUTES"
+      },
+      "o13": {
+        "emitted": "(--> (\u00d7 usdt 6) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 usdt 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "o14": {
+        "emitted": "(--> (\u00d7 usdt 18) decimals)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> (\u00d7 usdt 18) decimals)",
+        "verdict": "REFUTES"
+      },
+      "o15": {
+        "emitted": "(--> (\u00d7 dai 18) decimals)",
+        "truth": "(stv 1.0 0.0)",
+        "grounded": "(--> (\u00d7 dai 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "o16": {
+        "emitted": "(--> (\u00d7 dai 6) decimals)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> (\u00d7 dai 6) decimals)",
+        "verdict": "REFUTES"
+      },
+      "o17": {
+        "emitted": "(--> (\u00d7 weth 18) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 weth 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "o18": {
+        "emitted": "(--> (\u00d7 link 18) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 link 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "o19": {
+        "emitted": "(--> (\u00d7 uni 18) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 uni 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "o20": {
+        "emitted": "(--> (\u00d7 weth weth) symbol)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> (\u00d7 weth weth) symbol)",
+        "verdict": "SUPPORTS"
+      },
+      "o21": {
+        "emitted": "(--> (\u00d7 link link) symbol)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> (\u00d7 link link) symbol)",
+        "verdict": "SUPPORTS"
+      },
+      "o22": {
+        "emitted": "(--> (\u00d7 uni uniswap) symbol)",
+        "truth": "(stv 0.0 0.95)",
+        "grounded": "(--> (\u00d7 uni uniswap) symbol)",
+        "verdict": "REFUTES"
+      },
+      "o23": {
+        "emitted": "(--> (\u00d7 dai dai) symbol)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> (\u00d7 dai dai) symbol)",
+        "verdict": "SUPPORTS"
+      },
+      "o24": {
+        "emitted": "(--> (\u00d7 usdt usdc) symbol)",
+        "truth": "(stv 0.0 0.99)",
+        "grounded": "(--> (\u00d7 usdt usdc) symbol)",
+        "verdict": "REFUTES"
+      },
+      "L01": {
+        "emitted": "(--> (\u00d7 ach 8) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 ach 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L02": {
+        "emitted": "(--> (\u00d7 acu 18) decimals)",
+        "truth": "(stv 1.0 0.6)",
+        "grounded": "(--> (\u00d7 acu 12) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L03": {
+        "emitted": "(--> (\u00d7 alice 6) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 alice 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L04": {
+        "emitted": "(--> (\u00d7 ast 4) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 ast 4) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L05": {
+        "emitted": "(--> (\u00d7 audd 6) decimals)",
+        "truth": "(stv 1.0 0.55)",
+        "grounded": "(--> (\u00d7 audd 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L06": {
+        "emitted": "(--> (\u00d7 ausd 6) decimals)",
+        "truth": "(stv 1.0 0.75)",
+        "grounded": "(--> (\u00d7 ausd 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L07": {
+        "emitted": "(--> (\u00d7 axl 6) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 axl 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L08": {
+        "emitted": "(--> (\u00d7 bdx 9) decimals)",
+        "truth": "(stv 1.0 0.5)",
+        "grounded": "(--> (\u00d7 bdx 9) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L09": {
+        "emitted": "(--> (\u00d7 bitcoin 9) decimals)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> (\u00d7 bitcoin 8) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L10": {
+        "emitted": "(--> (\u00d7 cbbtc 8) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 cbbtc 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L11": {
+        "emitted": "(--> (\u00d7 0x8a2279d4a90b6fe1c4b30fa660cc9f926797baa2 6) decimals)",
+        "truth": "(stv 1.0 0.75)",
+        "grounded": "(--> (\u00d7 0x8a2279d4a90b6fe1c4b30fa660cc9f926797baa2 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L12": {
+        "emitted": "(--> (\u00d7 coval 18) decimals)",
+        "truth": "(stv 1.0 0.8)",
+        "grounded": "(--> (\u00d7 coval 8) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L13": {
+        "emitted": "(--> (\u00d7 cro 8) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 cro 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L14": {
+        "emitted": "(--> (\u00d7 cube 2) decimals)",
+        "truth": "(stv 1.0 0.6)",
+        "grounded": "(--> (\u00d7 cube 8) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L15": {
+        "emitted": "(--> (\u00d7 cvc 8) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 cvc 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L16": {
+        "emitted": "(--> (\u00d7 dar 6) decimals)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> (\u00d7 dar 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L17": {
+        "emitted": "(--> (\u00d7 dent 8) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 dent 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L18": {
+        "emitted": "(--> (\u00d7 dovu 18) decimals)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> (\u00d7 dovu 8) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L19": {
+        "emitted": "(--> (\u00d7 elizaos 18) decimals)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> (\u00d7 elizaos 9) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L20": {
+        "emitted": "(--> (\u00d7 es 18) decimals)",
+        "truth": "(stv 1.0 0.5)",
+        "grounded": "(--> (\u00d7 es 6) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L21": {
+        "emitted": "(--> (\u00d7 eurc 6) decimals)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> (\u00d7 eurc 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L22": {
+        "emitted": "(--> (\u00d7 europ 18) decimals)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> (\u00d7 europ 6) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L23": {
+        "emitted": "(--> (\u00d7 eurq 6) decimals)",
+        "truth": "(stv 1.0 0.75)",
+        "grounded": "(--> (\u00d7 eurq 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L24": {
+        "emitted": "(--> (\u00d7 eurr 18) decimals)",
+        "truth": "(stv 1.0 0.6)",
+        "grounded": "(--> (\u00d7 eurr 6) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L25": {
+        "emitted": "(--> (\u00d7 floki 9) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 floki 9) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L26": {
+        "emitted": "(--> (\u00d7 folks 18) decimals)",
+        "truth": "(stv 1.0 0.5)",
+        "grounded": "(--> (\u00d7 folks 6) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L27": {
+        "emitted": "(--> (\u00d7 frnt 6) decimals)",
+        "truth": "(stv 1.0 0.6)",
+        "grounded": "(--> (\u00d7 frnt 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L28": {
+        "emitted": "(--> (\u00d7 gala 8) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 gala 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L29": {
+        "emitted": "(--> (\u00d7 gusd 2) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 gusd 2) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L30": {
+        "emitted": "(--> (\u00d7 gyen 6) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 gyen 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L31": {
+        "emitted": "(--> (\u00d7 kbtc 8) decimals)",
+        "truth": "(stv 1.0 0.8)",
+        "grounded": "(--> (\u00d7 kbtc 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L32": {
+        "emitted": "(--> (\u00d7 0x96543ef8d2c75c26387c1a319ae69c0bee6f3fe7 6) decimals)",
+        "truth": "(stv 1.0 0.7)",
+        "grounded": "(--> (\u00d7 0x96543ef8d2c75c26387c1a319ae69c0bee6f3fe7 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L33": {
+        "emitted": "(--> (\u00d7 move 18) decimals)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> (\u00d7 move 8) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L34": {
+        "emitted": "(--> (\u00d7 mtl 8) decimals)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> (\u00d7 mtl 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L35": {
+        "emitted": "(--> (\u00d7 mxnb 6) decimals)",
+        "truth": "(stv 1.0 0.7)",
+        "grounded": "(--> (\u00d7 mxnb 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L36": {
+        "emitted": "(--> (\u00d7 neiro 9) decimals)",
+        "truth": "(stv 1.0 0.8)",
+        "grounded": "(--> (\u00d7 neiro 9) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L37": {
+        "emitted": "(--> (\u00d7 orn 8) decimals)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> (\u00d7 orn 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L38": {
+        "emitted": "(--> (\u00d7 ousd 18) decimals)",
+        "truth": "(stv 1.0 0.8)",
+        "grounded": "(--> (\u00d7 ousd 6) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L39": {
+        "emitted": "(--> (\u00d7 powr 6) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 powr 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L40": {
+        "emitted": "(--> (\u00d7 pro 8) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 pro 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L41": {
+        "emitted": "(--> (\u00d7 pyusd 6) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 pyusd 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L42": {
+        "emitted": "(--> (\u00d7 qcad 18) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 qcad 6) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L43": {
+        "emitted": "(--> (\u00d7 0x4123a133ae3c521fd134d7b13a2dec35b56c2463 18) decimals)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> (\u00d7 qrdo 8) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L44": {
+        "emitted": "(--> (\u00d7 rlc 9) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 rlc 9) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L45": {
+        "emitted": "(--> (\u00d7 shx 18) decimals)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> (\u00d7 shx 7) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L46": {
+        "emitted": "(--> (\u00d7 slay 18) decimals)",
+        "truth": "(stv 1.0 0.6)",
+        "grounded": "(--> (\u00d7 slay 6) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L47": {
+        "emitted": "(--> (\u00d7 slp 0) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 slp 0) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L48": {
+        "emitted": "(--> (\u00d7 sofid 6) decimals)",
+        "truth": "(stv 1.0 0.45)",
+        "grounded": "(--> (\u00d7 sofid 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L49": {
+        "emitted": "(--> (\u00d7 sol 9) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 sol 9) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L50": {
+        "emitted": "(--> (\u00d7 spx 8) decimals)",
+        "truth": "(stv 1.0 0.8)",
+        "grounded": "(--> (\u00d7 spx 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L51": {
+        "emitted": "(--> (\u00d7 storj 18) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 storj 8) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L52": {
+        "emitted": "(--> (\u00d7 swftc 8) decimals)",
+        "truth": "(stv 1.0 0.8)",
+        "grounded": "(--> (\u00d7 swftc 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L53": {
+        "emitted": "(--> (\u00d7 tel 18) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 tel 2) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L54": {
+        "emitted": "(--> (\u00d7 0x485d17a6f1b8780392d53d64751824253011a260 18) decimals)",
+        "truth": "(stv 1.0 0.7)",
+        "grounded": "(--> (\u00d7 time 8) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L55": {
+        "emitted": "(--> (\u00d7 tlm 18) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 tlm 4) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L56": {
+        "emitted": "(--> (\u00d7 token 9) decimals)",
+        "truth": "(stv 1.0 0.8)",
+        "grounded": "(--> (\u00d7 token 9) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L57": {
+        "emitted": "(--> (\u00d7 tru 18) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 tru 8) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L58": {
+        "emitted": "(--> (\u00d7 usat 6) decimals)",
+        "truth": "(stv 1.0 0.6)",
+        "grounded": "(--> (\u00d7 usat 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L59": {
+        "emitted": "(--> (\u00d7 usdg 6) decimals)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> (\u00d7 usdg 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L60": {
+        "emitted": "(--> (\u00d7 usdq 6) decimals)",
+        "truth": "(stv 1.0 0.7)",
+        "grounded": "(--> (\u00d7 usdq 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L61": {
+        "emitted": "(--> (\u00d7 usdr 18) decimals)",
+        "truth": "(stv 1.0 0.8)",
+        "grounded": "(--> (\u00d7 usdr 6) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L62": {
+        "emitted": "(--> (\u00d7 verona 18) decimals)",
+        "truth": "(stv 1.0 0.6)",
+        "grounded": "(--> (\u00d7 verona 6) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L63": {
+        "emitted": "(--> (\u00d7 vgx 18) decimals)",
+        "truth": "(stv 1.0 0.75)",
+        "grounded": "(--> (\u00d7 vgx 8) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L64": {
+        "emitted": "(--> (\u00d7 wanlog 18) decimals)",
+        "truth": "(stv 1.0 0.3)",
+        "grounded": "(--> (\u00d7 wanlog 12) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L65": {
+        "emitted": "(--> (\u00d7 wbt_erc20 18) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 wbt_erc20 18) decimals)",
+        "verdict": "UNKNOWN"
+      },
+      "L66": {
+        "emitted": "(--> (\u00d7 wbtc 8) decimals)",
+        "truth": "(stv 1.0 0.99)",
+        "grounded": "(--> (\u00d7 wbtc 8) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L67": {
+        "emitted": "(--> (\u00d7 wfb 18) decimals)",
+        "truth": "(stv 1.0 0.5)",
+        "grounded": "(--> (\u00d7 wfb 8) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L68": {
+        "emitted": "(--> (\u00d7 xaut 6) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 xaut 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L69": {
+        "emitted": "(--> (\u00d7 xsgd 6) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 xsgd 6) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L70": {
+        "emitted": "(--> (\u00d7 lpt 18) decimals)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> (\u00d7 lpt 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L71": {
+        "emitted": "(--> (\u00d7 yb 18) decimals)",
+        "truth": "(stv 1.0 0.8)",
+        "grounded": "(--> (\u00d7 yb 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L72": {
+        "emitted": "(--> (\u00d7 mezo 18) decimals)",
+        "truth": "(stv 1.0 0.6)",
+        "grounded": "(--> (\u00d7 mezo 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L73": {
+        "emitted": "(--> (\u00d7 almanak 18) decimals)",
+        "truth": "(stv 1.0 0.7)",
+        "grounded": "(--> (\u00d7 almanak 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L74": {
+        "emitted": "(--> (\u00d7 ev 18) decimals)",
+        "truth": "(stv 1.0 0.6)",
+        "grounded": "(--> (\u00d7 ev 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L75": {
+        "emitted": "(--> (\u00d7 planck 18) decimals)",
+        "truth": "(stv 1.0 0.45)",
+        "grounded": "(--> (\u00d7 planck 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L76": {
+        "emitted": "(--> (\u00d7 omni 18) decimals)",
+        "truth": "(stv 1.0 0.85)",
+        "grounded": "(--> (\u00d7 omni 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L77": {
+        "emitted": "(--> (\u00d7 0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0 18) decimals)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> (\u00d7 0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L78": {
+        "emitted": "(--> (\u00d7 zrx 18) decimals)",
+        "truth": "(stv 1.0 0.98)",
+        "grounded": "(--> (\u00d7 zrx 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L79": {
+        "emitted": "(--> (\u00d7 gno 18) decimals)",
+        "truth": "(stv 1.0 0.95)",
+        "grounded": "(--> (\u00d7 gno 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L80": {
+        "emitted": "(--> (\u00d7 ogn 18) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 ogn 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L81": {
+        "emitted": "(--> (\u00d7 kernel 18) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 kernel 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L82": {
+        "emitted": "(--> (\u00d7 rgt 18) decimals)",
+        "truth": "(stv 1.0 0.9)",
+        "grounded": "(--> (\u00d7 rgt 18) decimals)",
+        "verdict": "SUPPORTS"
+      },
+      "L83": {
+        "emitted": "(--> (\u00d7 drep 6) decimals)",
+        "truth": "(stv 1.0 0.6)",
+        "grounded": "(--> (\u00d7 drep 18) decimals)",
+        "verdict": "CORRECTED"
+      },
+      "L84": {
+        "emitted": "(--> (\u00d7 0xa9e8acf069c58aec8825542845fd754e41a9489a 9) decimals)",
+        "truth": "(stv 1.0 0.7)",
+        "grounded": "(--> (\u00d7 pepecoin 18) decimals)",
+        "verdict": "CORRECTED"
+      }
+    }
+  }
+}

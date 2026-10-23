@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 import re
+from pathlib import Path
 from typing import Dict, Optional
 
 from ..evidence import Evidence, SourceClass, Verdict
@@ -25,7 +26,7 @@ DEFAULT_RPC_URL = "https://ethereum-rpc.publicnode.com"
 ADDRESS = re.compile(r"^0x[0-9a-fA-F]{40}$")
 
 # Ethereum mainnet. Extend or replace via the `registry` argument.
-MAINNET_TOKENS: Dict[str, str] = {
+CORE_TOKENS: Dict[str, str] = {
     "usdc": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     "usdt": "0xdac17f958d2ee523a2206206994597c13d831ec7",
     "dai": "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -35,6 +36,15 @@ MAINNET_TOKENS: Dict[str, str] = {
     "steth": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
     "aave_v3_pool": "0x87870bca3f3fd6335c3f4ce8392d69350b4fa4e2",
 }
+
+
+def _bundled_tokens() -> Dict[str, str]:
+    """~480 symbols from the Uniswap default token list (tools/build_token_registry.py)."""
+    path = Path(__file__).with_name("tokens_mainnet.json")
+    return json.loads(path.read_text())["tokens"] if path.exists() else {}
+
+
+MAINNET_TOKENS: Dict[str, str] = {**_bundled_tokens(), **CORE_TOKENS}
 
 PROXY_SLOTS = {
     # bytes32(uint256(keccak256('eip1967.proxy.implementation')) - 1)
@@ -49,6 +59,62 @@ SELECTOR_DECIMALS = "0x313ce567"
 SELECTOR_SYMBOL = "0x95d89b41"
 # EIP-7702: an EOA that delegated its code carries 0xef0100 || address.
 DELEGATION_PREFIX = "0xef0100"
+
+# How LLMs actually phrase these facts (Omega's "granularity mismatch"):
+# (--> usdc smart_contract), (--> usdt upgradeable_proxy), (--> uni_token_contract ...).
+PROPERTY_SYNONYMS = {
+    "contract": "contract", "smart_contract": "contract", "contract_account": "contract",
+    "upgradeable": "upgradeable", "upgradable": "upgradeable", "upgradeable_proxy": "upgradeable",
+    "upgradable_proxy": "upgradeable", "proxy": "upgradeable", "proxy_contract": "upgradeable",
+    "upgradeable_contract": "upgradeable", "upgradable_contract": "upgradeable",
+}
+RELATION_SYNONYMS = {
+    "decimals": "decimals", "decimal_places": "decimals", "token_decimals": "decimals",
+    "symbol": "symbol", "ticker": "symbol", "token_symbol": "symbol",
+}
+SUBJECT_SUFFIXES = ("_token_contract", "_contract", "_token")
+
+
+def _canonical_subject(term: Term, registry: Dict[str, str]) -> Optional[str]:
+    """A registry name for the token (also when given by address), else its address."""
+    if not isinstance(term, str):
+        return None
+    if ADDRESS.match(term):
+        address = term.lower()
+        return next((name for name, a in registry.items() if a == address), address)
+    name = term.lower()
+    if name in registry:
+        return name
+    for suffix in SUBJECT_SUFFIXES:
+        if name.endswith(suffix) and name[: -len(suffix)] in registry:
+            return name[: -len(suffix)]
+    return None
+
+
+def canonical_form(statement: Term, registry: Optional[Dict[str, str]] = None) -> Optional[Term]:
+    """Rewrite an on-chain statement into the one form the source checks, or None.
+
+    (--> usdc smart_contract) and (--> usdc ([] contract)) both become
+    (--> usdc ([] contract)); (--> (× usdt_token 6) decimal_places) becomes
+    (--> (× usdt 6) decimals).
+    """
+    registry = MAINNET_TOKENS if registry is None else registry
+    if not is_statement(statement, INHERITANCE):
+        return None
+    _, subject, predicate = statement
+    if isinstance(predicate, tuple) and len(predicate) == 2 and predicate[0] in INT_SETS:
+        predicate = predicate[1]
+    if isinstance(predicate, str) and predicate.lower() in PROPERTY_SYNONYMS:
+        name = _canonical_subject(subject, registry)
+        if name:
+            return (INHERITANCE, name, ("[]", PROPERTY_SYNONYMS[predicate.lower()]))
+    if (isinstance(subject, tuple) and len(subject) == 3 and subject[0] == PRODUCT
+            and isinstance(predicate, str) and predicate.lower() in RELATION_SYNONYMS
+            and isinstance(subject[2], str)):
+        name = _canonical_subject(subject[1], registry)
+        if name:
+            return (INHERITANCE, (PRODUCT, name, subject[2]), RELATION_SYNONYMS[predicate.lower()])
+    return None
 
 
 class EvmSource(Source):
@@ -75,19 +141,15 @@ class EvmSource(Source):
         return self.registry.get(term.lower())
 
     def _parse(self, statement: Term):
-        if not is_statement(statement, INHERITANCE):
+        statement = canonical_form(statement, self.registry)
+        if statement is None:
             return None
         _, subject, predicate = statement
-        if (isinstance(predicate, tuple) and len(predicate) == 2 and predicate[0] in INT_SETS
-                and predicate[1] in ("contract", "upgradeable")):
+        if isinstance(predicate, tuple):
             address = self._address(subject)
-            return (predicate[1], address, None) if address else None
-        if (isinstance(subject, tuple) and len(subject) == 3 and subject[0] == PRODUCT
-                and predicate in ("decimals", "symbol")):
-            address = self._address(subject[1])
-            return (predicate, address, subject[2]) if address and isinstance(subject[2], str) else None
-        return None
-
+            return (predicate[1], address, None, statement) if address else None
+        address = self._address(subject[1])
+        return (predicate, address, subject[2], statement) if address else None
     def supports(self, statement: Term) -> bool:
         return self._parse(statement) is not None
 
@@ -97,7 +159,7 @@ class EvmSource(Source):
         parsed = self._parse(statement)
         if parsed is None:
             return Evidence.unknown("statement shape not supported", self.name)
-        kind, address, value = parsed
+        kind, address, value, statement = parsed
         try:
             return getattr(self, f"_check_{kind}")(statement, address, value)
         except (TransportError, ValueError, KeyError) as exc:

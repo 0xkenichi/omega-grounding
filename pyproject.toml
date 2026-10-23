@@ -23,6 +23,9 @@ omega-ground-bench = "omega_grounding.bench.harness:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+omega_grounding = ["sources/tokens_mainnet.json"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src", "tests"]

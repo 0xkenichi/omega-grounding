@@ -71,8 +71,8 @@ They are scored on:
 
 Inputs and how the numbers are produced:
 
-- **Datasets** (`benchmark/datasets/`): 43 taxonomy claims, 24 Ethereum mainnet claims, and 12 chains. Ground truth is labelled by hand, independent of the sources, so source mistakes count against grounding.
-- **Premises** come from a seeded noise model at the rates in Omega's failure-mode report (`omega-docs`) and at milder rates (`mild`), or from a real LLM with `--llm claude`.
+- **Datasets** (`benchmark/datasets/`): 43 taxonomy claims, 24 Ethereum mainnet claims, 84 open questions about long-tail token decimals, and 12 chains. Taxonomy and well-known-token labels are by hand, independent of the sources, so source mistakes count against grounding. Long-tail labels come from the Uniswap token list and are confirmed on-chain, where the chain is the definition of the fact.
+- **Premises** come from a seeded noise model at the rates in Omega's failure-mode report (`omega-docs`) and at milder rates (`mild`), or from a real LLM: `--llm asione` (ASI:One), `--llm ollama` (any local open-weights model, no key), or `--llm claude`. Real answers are cached with the prompt's hash, so reruns are free and reproducible.
 - **Sources** are replayed from `benchmark/cassettes/sources.json`, recorded live, so results are reproducible offline.
 
 ```bash
@@ -80,51 +80,62 @@ pip install -e '.[dev]'
 omega-ground-bench                         # replay, synthetic premises, 30 seeds per profile
 omega-ground-bench --transport record      # refresh the recording from live sources
 pip install -e '.[claude]'                 # Python >= 3.10
-omega-ground-bench --llm claude --transport record   # real premises from Claude (API cost)
+ASIONE_API_KEY=... omega-ground-bench --llm asione --transport record   # ASI:One (free tier: asi1)
+omega-ground-bench --llm ollama --model qwen2.5:7b --transport record   # local model, no key
+omega-ground-bench --llm claude --transport record   # Claude (API cost)
 ```
 
 The `--llm claude` path uses `claude-opus-5-5` with structured JSON output. It opts into server-side refusal fallbacks (`fallbacks: "default"`), so a declined request is retried on a fallback model.
 
 ### Results
 
-From `omega-ground-bench` (30 seeds per profile, sources replayed from the committed recording; full output in [`benchmark/results/report.md`](benchmark/results/report.md)).
+#### A real LLM: ASI:One (`asi1`)
 
-Synthetic premises at **Omega's measured failure rates** (`omega-docs`: 45% factual error, 16.6% swaps):
+ASI:One is the ASI Alliance's model and one of Omega's built-in providers. It ran at temperature 0 on all 151 items, a single deterministic run.
 
-| Metric | baseline | discount (−15 pts) | grounded |
+- Its answers are committed in [`benchmark/results/asione-asi1/premises.jsonl`](benchmark/results/asione-asi1/premises.jsonl).
+- Full reports are in [`benchmark/results/asione-asi1/`](benchmark/results/asione-asi1/), one per dataset.
+
+| ASI:One, by dataset | LLM facts right | False premises reaching ACT: as written → grounded | True premises reaching ACT: as written → grounded |
 |---|---|---|---|
-| False premises reaching ACT ↓ | 0.475 | 0.475 | **0.025** |
-| True premises reaching ACT ↑ | 0.563 | 0.563 | **0.718** |
-| Precision of ACT premises ↑ | 0.595 | 0.595 | **0.980** |
-| Belief accuracy ↑ | 0.546 | 0.546 | **0.846** |
-| Brier score of NAL expectation ↓ | 0.383 | 0.333 | **0.109** |
-| Swapped relations still acted on ↓ | 0.516 | 0.516 | **0.026** |
-| False multi-hop conclusions reaching ACT ↓ | 0.075 | 0.008 | **0.000** |
-| True multi-hop conclusions reaching ACT ↑ | 0.200 | 0.058 | **0.237** |
+| Textbook taxonomy (43) | 41/41 (100%) | 0% → 0% | 100% → 100% |
+| Well-known tokens (24) | 22/24 (92%) | 9.1% → **0%** | 84.6% → **92.3%** |
+| Long-tail token decimals (84) | 55/83 (**66%**) | 96.4% → **0%** (all 28 corrected) | 96.4% → **100%** |
+| All 151 | 118/148 (80%) | 53.8% → **0%** | 95.8% → **99.2%** |
 
-Synthetic premises from a **strong model on easy facts** (`mild`: 10% factual error, 5% swaps):
+What this shows:
 
-| Metric | baseline | discount | grounded |
-|---|---|---|---|
-| False premises reaching ACT ↓ | 0.137 | 0.137 | **0.003** |
-| True premises reaching ACT ↑ | **0.899** | **0.899** | 0.828 |
-| Precision of ACT premises ↑ | 0.910 | 0.910 | **0.998** |
-| Brier score ↓ | 0.105 | 0.106 | **0.051** |
-| Swapped relations still acted on ↓ | 0.565 | 0.565 | **0.013** |
-| True multi-hop conclusions reaching ACT ↑ | **0.713** | 0.146 | 0.621 |
+- **On textbook facts the model is already right, so grounding has nothing to fix.** It costs a little calibration (Brier 0.006 → 0.016).
+- **On long-tail facts the model guesses, and confidently.** It gave the wrong decimals for 28 of 83 tokens and would have acted on 27 of them. Grounding replaced every one with the on-chain value: belief accuracy rose from 66% to 100%, and Brier fell from 0.263 to 0.002.
+- **No swapped relations.** The model wrote no swaps, and 4.6% of its premises used an equivalent phrasing (`smart_contract`, `uni_token_contract`) that the sources accept.
+- **Omega's manual fix only partly works on real outputs.** The −15-point discount helps somewhat on the long tail (false ACT 96% → 64%) because the model's confidence there is spread out. It never corrects a value.
 
-How to read this:
+#### Synthetic premises (stress test)
 
-- **Grounding nearly eliminates acting on false or swapped premises at both noise levels.**
-- **The cost shows with a strong LLM.** Some true facts drop out of ACT, because the sources miss 6 of 67 true claims (table below) and the closed-world rule then demotes them.
-- **The −15-point discount does not move premises between tiers.** LLM confidences of 0.70–0.95 stay above the ACT threshold of 0.5 after the discount. It only bites on multi-hop chains, where it suppresses true and false conclusions alike.
-- **The synthetic results are not a measurement of a real LLM.** Run `--llm claude` for that.
+A seeded noise model generates the premises; 30 seeds per profile. Sources are replayed from the committed recording. Full output: [`benchmark/results/report.md`](benchmark/results/report.md).
 
-Source agreement with the hand labels on the canonical statements: **61 of 67**, with **no false claim supported**. The misses are all true claims:
+| Metric | `omega-docs` noise (45% factual error, 16.6% swaps): baseline → grounded | `mild` noise (10%, 5%): baseline → grounded |
+|---|---|---|
+| False premises reaching ACT ↓ | 0.475 → **0.025** | 0.137 → **0.003** |
+| True premises reaching ACT ↑ | 0.554 → **0.906** | 0.906 → **0.943** |
+| Belief accuracy ↑ | 0.548 → **0.932** | 0.898 → **0.962** |
+| Brier score ↓ | 0.382 → **0.062** | 0.094 → **0.026** |
+| Swapped relations still acted on ↓ | 0.516 → **0.026** | 0.565 → **0.013** |
+| True multi-hop conclusions reaching ACT ↑ | 0.200 → **0.237** | **0.713** → 0.621 |
 
-- **reptile → animal, dinosaur → reptile, insect → hexapod:** Wikidata search does not return the taxa Reptilia and Hexapoda for these words.
-- **oak → tree, iron → metal:** the class path is longer than the hop limit.
-- **stETH upgradeable:** an Aragon proxy, which the slot check does not recognise.
+The `omega-docs` rates come from Omega's failure-mode report. As the ASI:One run shows, a real model's error rate depends heavily on the kind of fact: it ranges from 0% to 34% here.
+
+#### Source accuracy
+
+On the canonical statements, the sources agree with the labels on **145 of 151**:
+
+- **No false claim is supported.**
+- **All 84 long-tail decimals match the chain.** Those labels come from the Uniswap token list and were checked on-chain.
+- **The 6 misses are all true claims:**
+  - reptile → animal, dinosaur → reptile, insect → hexapod: Wikidata search does not return the taxa Reptilia and Hexapoda for these words.
+  - oak → tree, iron → metal: the class path is longer than the hop limit.
+  - stETH upgradeable: an Aragon proxy, which the slot check does not recognise.
+- **Why the misses rarely cost anything with ASI:One:** its confidence on them is 0.95–0.99, and a closed-world refutation cannot pull that below ACT.
 
 ## Using it in Omega
 
@@ -169,7 +180,7 @@ omega-ground "((--> mammal dolphin) (stv 1.0 0.9))"
   - `tests/test_metta_parity.py` shows the MeTTa and Python grounding rules agree on verdict, statement, truth and tier.
   - Both tests skip unless `PETTA_PATH` and `OMEGA_PATH` are set.
 - **Not yet exercised: a full agent run with an LLM choosing to call `ground`,** and `groundingRemember` (which needs Omega's ChromaDB memory stack).
-- **The synthetic noise model is a stress model.** Its rates come from Omega's report, but it does not stand in for any particular LLM. Use `--llm claude` to measure a real one.
+- **The synthetic noise model is a stress model.** Its rates come from Omega's report, but it does not stand in for any particular LLM. The ASI:One run measures a real one.
 - **Known source limitations, listed under Results:** 6 true claims are missed.
 - **Live Wikidata lookups are slow:** up to a few minutes per new claim. They are instant once recorded.
 

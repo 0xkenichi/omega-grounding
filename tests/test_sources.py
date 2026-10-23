@@ -111,4 +111,15 @@ def test_evm_symbol_is_case_insensitive():
 
 
 def test_evm_ignores_unknown_tokens():
-    assert not evm().supports(parse("(--> (× shib 18) decimals)"))
+    assert not evm().supports(parse("(--> (× notarealtoken 18) decimals)"))
+
+
+def test_evm_accepts_natural_phrasings():
+    from omega_grounding.sources.evm import canonical_form
+
+    assert canonical_form(parse("(--> usdc smart_contract)")) == parse("(--> usdc ([] contract))")
+    assert canonical_form(parse("(--> usdt_token upgradeable_proxy)")) == parse("(--> usdt ([] upgradeable))")
+    assert canonical_form(parse("(--> (× uni_token_contract 18) decimal_places)")) == parse("(--> (× uni 18) decimals)")
+    assert canonical_form(parse("(--> dolphin mammal)")) is None
+    assert evm().check(parse("(--> usdc smart_contract)")).verdict is Verdict.SUPPORTS
+    assert evm().check(parse("(--> weth upgradeable_proxy)")).verdict is Verdict.REFUTES
