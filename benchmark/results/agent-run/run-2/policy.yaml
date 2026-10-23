@@ -1,0 +1,5 @@
+version: 1
+filesystem_policy:
+  read_only:
+    - /Users/kenichi/omega-runtime/PeTTa
+  read_write: []

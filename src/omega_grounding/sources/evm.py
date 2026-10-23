@@ -102,6 +102,15 @@ def canonical_form(statement: Term, registry: Optional[Dict[str, str]] = None) -
     if not is_statement(statement, INHERITANCE):
         return None
     _, subject, predicate = statement
+    # Value inside the predicate: (--> usdc (decimals 6)), also with a (× name 0xaddress) subject.
+    if (isinstance(predicate, tuple) and len(predicate) == 2 and isinstance(predicate[0], str)
+            and predicate[0].lower() in RELATION_SYNONYMS and isinstance(predicate[1], str)):
+        parts = subject[1:] if isinstance(subject, tuple) and subject and subject[0] == PRODUCT else (subject,)
+        names = [n for n in (_canonical_subject(t, registry) for t in parts) if n]
+        if names:
+            # An address pins the token down; prefer the term that resolved from one.
+            name = next((n for t, n in zip(parts, names) if isinstance(t, str) and ADDRESS.match(t)), names[0])
+            return (INHERITANCE, (PRODUCT, name, predicate[1]), RELATION_SYNONYMS[predicate[0].lower()])
     if isinstance(predicate, tuple) and len(predicate) == 2 and predicate[0] in INT_SETS:
         predicate = predicate[1]
     if isinstance(predicate, str) and predicate.lower() in PROPERTY_SYNONYMS:

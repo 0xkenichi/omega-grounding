@@ -137,6 +137,22 @@ On the canonical statements, the sources agree with the labels on **145 of 151**
   - stETH upgradeable: an Aragon proxy, which the slot check does not recognise.
 - **Why the misses rarely cost anything with ASI:One:** its confidence on them is 0.95–0.99, and a closed-world refutation cannot pull that below ACT.
 
+### Live agent run
+
+This is Omega's real agent loop (`run.metta` → `lib_omega` → `(omega)`) with the plugin, ASI:One `asi1` as the LLM, and a scripted chat. It ran 3 times; scored in [`benchmark/results/agent-run/summary.md`](benchmark/results/agent-run/summary.md), with every session's transcript, Omega history and full log alongside.
+
+- **9/9 answers correct.** The questions were DOVU decimals, EUROP decimals and "are whales fish?". The agent called `ground` unprompted before each answer.
+- **Both token answers came back CORRECTED from the chain** (8 and 6), where ASI:One by itself says 18 for both.
+- **The UNKNOWN reply lists the checkable shapes, and the agent used it** to rephrase a premise once and get it checked.
+- **Grounding fixes facts, not arithmetic.** One session stated the right decimals and then multiplied wrongly.
+
+How it was run (`tools/agent_run/`; reproduce with `python tools/agent_run/run_agent.py --petta /path/to/PeTTa` and an `ASIONE_API_KEY`):
+
+- **On a Mac, without Omega's Linux sandbox.** A safety plugin removes every shell, file, web, memory and raw-MeTTa skill. A `nal` skill allows only whitelisted inference expressions (unit-tested against code smuggled into premises).
+- **ChromaDB, ddgs and Landlock are replaced by stand-ins** (`tools/agent_run/stubs/`), because the real packages were too large to download here. Nothing that uses them stays enabled.
+
+Integrating with the real loop exposed an Omega/PeTTa bug: plugin functions get defined two or more times, so `ground` returned up to 64 copies of its answer. The plugin now works around it. The write-up is in [`docs/UPSTREAM_BUGS.md`](docs/UPSTREAM_BUGS.md).
+
 ## Using it in Omega
 
 For a manual PeTTa-based install (Omega pins **PeTTa v1.0.4**; newer PeTTa resolves relative imports differently and Omega's own tests fail on it):
@@ -179,7 +195,7 @@ omega-ground "((--> mammal dolphin) (stv 1.0 0.9))"
   - `tests/test_omega_plugin.py` loads the plugin through Omega's own `loadMettaPlugin`. Config, skill registration and the prompt extension all go through Omega's APIs. It then calls `ground` and gets the correct grounded premises.
   - `tests/test_metta_parity.py` shows the MeTTa and Python grounding rules agree on verdict, statement, truth and tier.
   - Both tests skip unless `PETTA_PATH` and `OMEGA_PATH` are set.
-- **Not yet exercised: a full agent run with an LLM choosing to call `ground`,** and `groundingRemember` (which needs Omega's ChromaDB memory stack).
+- **Full agent run: done** (see Live agent run). Still not exercised: `groundingRemember`, which needs Omega's ChromaDB memory stack.
 - **The synthetic noise model is a stress model.** Its rates come from Omega's report, but it does not stand in for any particular LLM. The ASI:One run measures a real one.
 - **Known source limitations, listed under Results:** 6 true claims are missed.
 - **Live Wikidata lookups are slow:** up to a few minutes per new claim. They are instant once recorded.

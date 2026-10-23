@@ -123,3 +123,20 @@ def test_evm_accepts_natural_phrasings():
     assert canonical_form(parse("(--> dolphin mammal)")) is None
     assert evm().check(parse("(--> usdc smart_contract)")).verdict is Verdict.SUPPORTS
     assert evm().check(parse("(--> weth upgradeable_proxy)")).verdict is Verdict.REFUTES
+
+
+def test_evm_accepts_value_inside_predicate():
+    from omega_grounding.sources.evm import canonical_form
+
+    usdc = MAINNET_TOKENS["usdc"]
+    assert canonical_form(parse("(--> usdc (decimals 6))")) == parse("(--> (× usdc 6) decimals)")
+    assert canonical_form(parse(f"(--> (× usdc {usdc}) (decimals 18))")) == parse("(--> (× usdc 18) decimals)")
+    ev = evm().check(parse(f"(--> (× usdc {usdc}) (decimals 18))"))
+    assert ev.verdict is Verdict.REFUTES and ev.correction == parse("(--> (× usdc 6) decimals)")
+
+
+def test_unknown_lists_the_shapes_sources_accept():
+    from omega_grounding.grounder import Grounder
+
+    ev = Grounder([evm()]).evidence(parse("(--> schuman-europ erc20-eur-stablecoin)"))
+    assert ev.verdict is Verdict.UNKNOWN and "(--> (× TOKEN N) decimals)" in ev.provenance

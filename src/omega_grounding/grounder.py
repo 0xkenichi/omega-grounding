@@ -11,6 +11,13 @@ from .sources.evm import DEFAULT_RPC_URL
 from .transport import CassetteTransport, HttpTransport
 
 
+# Returned with UNKNOWN so an agent can rephrase in one step instead of guessing.
+SUPPORTED_SHAPES = ("Checkable shapes: (--> a b) between plain terms, e.g. (--> dolphin mammal); "
+                    "on-chain, with TOKEN a ticker or 0x address: (--> (× TOKEN N) decimals), "
+                    "(--> (× TOKEN SYMBOL) symbol), (--> TOKEN ([] contract)), (--> TOKEN ([] upgradeable)). "
+                    "To look up a value, pass any N: a wrong value comes back CORRECTED.")
+
+
 class Grounder:
     """Routes a statement to the first source that can decide it."""
 
@@ -33,7 +40,7 @@ class Grounder:
         return self._cache[key]
 
     def _lookup(self, statement: Term) -> Evidence:
-        result = Evidence.unknown("no source covers this statement")
+        result = Evidence.unknown("no source covers this statement. " + SUPPORTED_SHAPES)
         for source in self.sources:
             if source.supports(statement):
                 result = source.check(statement)

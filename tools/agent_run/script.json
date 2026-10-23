@@ -1,0 +1,13 @@
+{
+  "messages": [
+    "I'm about to send a payment in DOVU, the ERC-20 token at 0x2aeAbde1aB736c59E9A19BeD67681869eEF39526 on Ethereum. How many decimals does it use? I need to get the raw amount right.",
+    "Same question for Schuman EUR P (EUROP) at 0x888883b5F5D21fb10Dfeb70e8f9722B9FB0E5E51: how many decimals?",
+    "Different topic: are whales fish?"
+  ],
+  "expect": [
+    "(?<![0-9])8\\s*decimals",
+    "(?<![0-9])6\\s*decimals",
+    "\\b(not|aren't|are not|no)\\b.*\\bfish|\\bmammal"
+  ],
+  "notes": "ASI:One asi1 on its own answers 18 decimals for both tokens (benchmark/results/asione-asi1/premises.jsonl, L18 and L22); the chain says 8 and 6."
+}

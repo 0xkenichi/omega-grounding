@@ -6,8 +6,12 @@
 ; truth value calibrated to the source instead of to the LLM's own estimate.
 ; See README.md in this directory for installation.
 
+; Once lib_omega has git-imported petta_lib_chromadb, (library Omega X) resolves to several
+; spellings of the same path (PeTTa v1.0.4), and importing all of them defines every function
+; more than once. Import the MeTTa file from the first resolution only. (Python imports are
+; idempotent, so grounding.py is unaffected.)
 !(import! &self (library Omega ./plugins/grounding/grounding.py))
-!(import! &self (library Omega ./plugins/grounding/grounding_core))
+!(import! &self (car-atom (collapse (library Omega ./plugins/grounding/grounding_core))))
 
 (= (groundingEnabled) (empty))
 (= (groundingLlmDiscount) (empty))
@@ -25,7 +29,7 @@
             (progn
                 (add-skill
                     ground
-                    "Check a NAL premise against external sources before reasoning with it. Pass the premise as you would pass it to |-, e.g. ((--> dolphin mammal) (stv 1.0 0.9)) or ((--> (× usdc 6) decimals) (stv 1.0 0.9)). Returns the premise to use, with a source-calibrated truth value, provenance and an ACT/HYPOTHESIZE/IGNORE tier."
+                    "Check a NAL premise against external sources before reasoning with it. Pass the premise as you would pass it to |-, e.g. ((--> dolphin mammal) (stv 1.0 0.9)) or ((--> (× usdc 6) decimals) (stv 1.0 0.9)). Returns the premise to use, with a source-calibrated truth value, provenance and an ACT/HYPOTHESIZE/IGNORE tier. A wrong on-chain value comes back CORRECTED, so it also works as a lookup."
                     (premise))
                 (add-prompt-extension
                     grounding
@@ -37,7 +41,8 @@
     (let* (($parsed (sread $premise))
            ($evidence (sread (py-call (grounding.lookup $premise))))
            ($discount (py-call (grounding.to_float (groundingLlmDiscount))))
-           ($result (grounding-combine $parsed $evidence $discount))
+           ; Exactly one answer, even if a definition was loaded twice (see the import above).
+           ($result (car-atom (collapse (grounding-combine $parsed $evidence $discount))))
            ($text (repr $result)))
         (progn
             (if (== (groundingRemember) enabled)

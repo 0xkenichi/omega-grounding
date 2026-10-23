@@ -1,0 +1,8 @@
+{"t": 1792737513.7, "role": "channel", "text": "started", "message_index": -1}
+{"t": 1792737513.7, "role": "agent", "text": "63a7826-dirty", "message_index": -1}
+{"t": 1792737513.7, "role": "user", "text": "I'm about to send a payment in DOVU, the ERC-20 token at 0x2aeAbde1aB736c59E9A19BeD67681869eEF39526 on Ethereum. How many decimals does it use? I need to get the raw amount right.", "message_index": 0}
+{"t": 1792737521.1, "role": "agent", "text": "DOVU (0x2aeAbde1aB736c59E9A19BeD67681869eEF39526) uses 8 decimals, not the ERC-20 default 18. Raw amount = human amount \u00d7 10^8. E.g. 25 DOVU \u2192 2500000000.", "message_index": 0}
+{"t": 1792737546.6, "role": "user", "text": "Same question for Schuman EUR P (EUROP) at 0x888883b5F5D21fb10Dfeb70e8f9722B9FB0E5E51: how many decimals?", "message_index": 1}
+{"t": 1792737553.2, "role": "agent", "text": "Schuman EUR P (EUROP, 0x888883b5F5D21fb10Dfeb70e8f9722B9FB0E5E51) uses 6 decimals. Raw amount = EUR amount \u00d7 10^6. E.g. 25 EUROP \u2192 25000000.", "message_index": 1}
+{"t": 1792737578.7, "role": "user", "text": "Different topic: are whales fish?", "message_index": 2}
+{"t": 1792737582.5, "role": "agent", "text": "No \u2014 whales are mammals, not fish (grounded via Wikidata: Q1865281 \u2192 mammal). They breathe air, are warm-blooded, give live birth, and nurse their young; they just happen to live in water.", "message_index": 2}
