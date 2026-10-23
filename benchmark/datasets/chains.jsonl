@@ -1,0 +1,12 @@
+{"id": "c01", "premises": ["t01", "t11"], "conclusion": "(--> dolphin animal)", "gold": true}
+{"id": "c02", "premises": ["t03", "t11"], "conclusion": "(--> bat animal)", "gold": true}
+{"id": "c03", "premises": ["t04", "t12"], "conclusion": "(--> penguin animal)", "gold": true}
+{"id": "c04", "premises": ["t09", "t13"], "conclusion": "(--> snake animal)", "gold": true}
+{"id": "c05", "premises": ["t02", "t14"], "conclusion": "(--> whale synapsid)", "gold": true}
+{"id": "c06", "premises": ["t24", "t26"], "conclusion": "(--> violin musical_instrument)", "gold": true}
+{"id": "c07", "premises": ["t21", "t27"], "conclusion": "(--> earth astronomical_object)", "gold": true}
+{"id": "c08", "premises": ["t04", "t16", "t17"], "conclusion": "(--> penguin reptile)", "gold": true}
+{"id": "c09", "premises": ["f02", "t16"], "conclusion": "(--> bat dinosaur)", "gold": false}
+{"id": "c10", "premises": ["f03", "t14"], "conclusion": "(--> penguin synapsid)", "gold": false}
+{"id": "c11", "premises": ["f04", "t15"], "conclusion": "(--> spider hexapod)", "gold": false}
+{"id": "c12", "premises": ["f02", "t16", "t17"], "conclusion": "(--> bat reptile)", "gold": false}

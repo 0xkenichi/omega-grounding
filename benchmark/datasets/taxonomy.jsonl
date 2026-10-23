@@ -1,0 +1,43 @@
+{"id": "t01", "text": "Dolphins are mammals.", "statement": "(--> dolphin mammal)", "gold": true}
+{"id": "t02", "text": "Whales are mammals.", "statement": "(--> whale mammal)", "gold": true}
+{"id": "t03", "text": "Bats are mammals.", "statement": "(--> bat mammal)", "gold": true}
+{"id": "t04", "text": "Penguins are birds.", "statement": "(--> penguin bird)", "gold": true}
+{"id": "t05", "text": "Ostriches are birds.", "statement": "(--> ostrich bird)", "gold": true}
+{"id": "t06", "text": "Sharks are fish.", "statement": "(--> shark fish)", "gold": true}
+{"id": "t07", "text": "Salmon are fish.", "statement": "(--> salmon fish)", "gold": true}
+{"id": "t08", "text": "Frogs are amphibians.", "statement": "(--> frog amphibian)", "gold": true}
+{"id": "t09", "text": "Snakes are reptiles.", "statement": "(--> snake reptile)", "gold": true}
+{"id": "t10", "text": "Spiders are arachnids.", "statement": "(--> spider arachnid)", "gold": true}
+{"id": "t11", "text": "Mammals are animals.", "statement": "(--> mammal animal)", "gold": true}
+{"id": "t12", "text": "Birds are animals.", "statement": "(--> bird animal)", "gold": true}
+{"id": "t13", "text": "Reptiles are animals.", "statement": "(--> reptile animal)", "gold": true}
+{"id": "t14", "text": "Mammals are synapsids.", "statement": "(--> mammal synapsid)", "gold": true}
+{"id": "t15", "text": "Insects are hexapods.", "statement": "(--> insect hexapod)", "gold": true}
+{"id": "t16", "text": "Birds are dinosaurs.", "statement": "(--> bird dinosaur)", "gold": true}
+{"id": "t17", "text": "Dinosaurs are reptiles.", "statement": "(--> dinosaur reptile)", "gold": true}
+{"id": "t18", "text": "Cats are mammals.", "statement": "(--> cat mammal)", "gold": true}
+{"id": "t19", "text": "Dogs are mammals.", "statement": "(--> dog mammal)", "gold": true}
+{"id": "t20", "text": "Oaks are trees.", "statement": "(--> oak tree)", "gold": true}
+{"id": "t21", "text": "Earth is a planet.", "statement": "(--> earth planet)", "gold": true}
+{"id": "t22", "text": "Mars is a planet.", "statement": "(--> mars planet)", "gold": true}
+{"id": "t23", "text": "The Sun is a star.", "statement": "(--> sun star)", "gold": true}
+{"id": "t24", "text": "The violin is a string instrument.", "statement": "(--> violin string_instrument)", "gold": true}
+{"id": "t25", "text": "The guitar is a string instrument.", "statement": "(--> guitar string_instrument)", "gold": true}
+{"id": "t26", "text": "String instruments are musical instruments.", "statement": "(--> string_instrument musical_instrument)", "gold": true}
+{"id": "t27", "text": "Planets are astronomical objects.", "statement": "(--> planet astronomical_object)", "gold": true}
+{"id": "t28", "text": "Iron is a metal.", "statement": "(--> iron metal)", "gold": true}
+{"id": "t29", "text": "Gold is a metal.", "statement": "(--> gold metal)", "gold": true}
+{"id": "f01", "text": "Whales are fish.", "statement": "(--> whale fish)", "gold": false}
+{"id": "f02", "text": "Bats are birds.", "statement": "(--> bat bird)", "gold": false}
+{"id": "f03", "text": "Penguins are mammals.", "statement": "(--> penguin mammal)", "gold": false}
+{"id": "f04", "text": "Spiders are insects.", "statement": "(--> spider insect)", "gold": false}
+{"id": "f05", "text": "Dolphins are fish.", "statement": "(--> dolphin fish)", "gold": false}
+{"id": "f06", "text": "Snakes are amphibians.", "statement": "(--> snake amphibian)", "gold": false}
+{"id": "f07", "text": "Sharks are mammals.", "statement": "(--> shark mammal)", "gold": false}
+{"id": "f08", "text": "The Sun is a planet.", "statement": "(--> sun planet)", "gold": false}
+{"id": "f09", "text": "The Moon is a planet.", "statement": "(--> moon planet)", "gold": false}
+{"id": "f10", "text": "The violin is a keyboard instrument.", "statement": "(--> violin keyboard_instrument)", "gold": false}
+{"id": "f11", "text": "Frogs are reptiles.", "statement": "(--> frog reptile)", "gold": false}
+{"id": "f12", "text": "Octopuses are fish.", "statement": "(--> octopus fish)", "gold": false}
+{"id": "f13", "text": "Mars is a star.", "statement": "(--> mars star)", "gold": false}
+{"id": "f14", "text": "Iron is a noble gas.", "statement": "(--> iron noble_gas)", "gold": false}

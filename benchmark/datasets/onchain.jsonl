@@ -1,0 +1,24 @@
+{"id": "o01", "text": "USDC is a smart contract.", "statement": "(--> usdc ([] contract))", "gold": true}
+{"id": "o02", "text": "The address 0xd8da6bf26964af9d7eed9e03e53415d37aa96045 (Vitalik Buterin's) is a smart contract.", "statement": "(--> 0xd8da6bf26964af9d7eed9e03e53415d37aa96045 ([] contract))", "gold": false}
+{"id": "o03", "text": "The USDC contract is upgradeable.", "statement": "(--> usdc ([] upgradeable))", "gold": true}
+{"id": "o04", "text": "The WETH contract is upgradeable.", "statement": "(--> weth ([] upgradeable))", "gold": false}
+{"id": "o05", "text": "The DAI contract is upgradeable.", "statement": "(--> dai ([] upgradeable))", "gold": false}
+{"id": "o06", "text": "The USDT contract is an upgradeable proxy.", "statement": "(--> usdt ([] upgradeable))", "gold": false}
+{"id": "o07", "text": "The stETH contract is upgradeable.", "statement": "(--> steth ([] upgradeable))", "gold": true}
+{"id": "o08", "text": "The Aave v3 Pool contract is upgradeable.", "statement": "(--> aave_v3_pool ([] upgradeable))", "gold": true}
+{"id": "o09", "text": "The UNI token contract is upgradeable.", "statement": "(--> uni ([] upgradeable))", "gold": false}
+{"id": "o10", "text": "The LINK token contract is upgradeable.", "statement": "(--> link ([] upgradeable))", "gold": false}
+{"id": "o11", "text": "USDC has 6 decimals.", "statement": "(--> (× usdc 6) decimals)", "gold": true}
+{"id": "o12", "text": "USDC has 18 decimals.", "statement": "(--> (× usdc 18) decimals)", "gold": false, "also_true": ["(--> (× usdc 6) decimals)"]}
+{"id": "o13", "text": "USDT has 6 decimals.", "statement": "(--> (× usdt 6) decimals)", "gold": true}
+{"id": "o14", "text": "USDT has 18 decimals.", "statement": "(--> (× usdt 18) decimals)", "gold": false, "also_true": ["(--> (× usdt 6) decimals)"]}
+{"id": "o15", "text": "DAI has 18 decimals.", "statement": "(--> (× dai 18) decimals)", "gold": true}
+{"id": "o16", "text": "DAI has 6 decimals.", "statement": "(--> (× dai 6) decimals)", "gold": false, "also_true": ["(--> (× dai 18) decimals)"]}
+{"id": "o17", "text": "WETH has 18 decimals.", "statement": "(--> (× weth 18) decimals)", "gold": true}
+{"id": "o18", "text": "LINK has 18 decimals.", "statement": "(--> (× link 18) decimals)", "gold": true}
+{"id": "o19", "text": "UNI has 18 decimals.", "statement": "(--> (× uni 18) decimals)", "gold": true}
+{"id": "o20", "text": "The WETH contract's symbol is WETH.", "statement": "(--> (× weth WETH) symbol)", "gold": true}
+{"id": "o21", "text": "The LINK token's symbol is LINK.", "statement": "(--> (× link LINK) symbol)", "gold": true}
+{"id": "o22", "text": "The UNI token's symbol is UNISWAP.", "statement": "(--> (× uni UNISWAP) symbol)", "gold": false, "also_true": ["(--> (× uni UNI) symbol)"]}
+{"id": "o23", "text": "The DAI token's symbol is DAI.", "statement": "(--> (× dai DAI) symbol)", "gold": true}
+{"id": "o24", "text": "The USDT token's symbol is USDC.", "statement": "(--> (× usdt USDC) symbol)", "gold": false, "also_true": ["(--> (× usdt USDT) symbol)"]}

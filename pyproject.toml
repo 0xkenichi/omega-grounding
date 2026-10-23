@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "omega-grounding"
+version = "0.1.0"
+description = "Automated premise grounding for the Omega neural-symbolic agent, plus a benchmark that measures it against Omega's documented failure modes."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.9"
+dependencies = []
+
+[project.optional-dependencies]
+# Live LLM atomizer for the benchmark (needs Python >= 3.10 for current SDKs).
+claude = ["anthropic"]
+dev = ["pytest>=7"]
+
+[project.scripts]
+omega-ground = "omega_grounding.cli:main"
+omega-ground-bench = "omega_grounding.bench.harness:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]
