@@ -96,3 +96,22 @@ def chain_metrics(chains: List[Chain], finals: Dict[str, Final]) -> Dict[str, Op
 
 def verdict_counts(finals: Dict[str, Final]) -> Dict[str, int]:
     return dict(Counter(f.verdict for f in finals.values()))
+
+
+def formulation_counts(items: Dict[str, Item], emitted: Dict[str, Final]) -> Dict[str, int]:
+    """Classify what the LLM wrote for each item, before any grounding."""
+    counts = Counter()
+    for item_id, fin in emitted.items():
+        item = items[item_id]
+        n = normalize(fin.emitted)
+        if n == normalize(item.statement):
+            counts["canonical"] += 1
+        elif item.swappable and n == normalize(reverse(item.statement)):
+            counts["swapped"] += 1
+        else:
+            counts["other"] += 1
+        truth = item.truth_of(fin.emitted)
+        if truth is not None:
+            counts["belief_graded"] += 1
+            counts["belief_correct"] += (fin.truth.f >= 0.5) == truth
+    return dict(counts)

@@ -3,6 +3,7 @@
     omega-ground-bench                          # replay recorded sources, synthetic LLM
     omega-ground-bench --transport record       # refresh the cassette from live sources
     omega-ground-bench --llm claude --transport record   # real LLM premises (API cost)
+    omega-ground-bench --llm ollama --model qwen2.5:7b --transport record   # local model, no key
 """
 
 from __future__ import annotations
@@ -17,8 +18,8 @@ from ..evidence import DEFAULT_LLM_DISCOUNT, discount
 from ..grounder import Grounder, default_grounder
 from ..nal import fmt, reverse
 from .datasets import Chain, Item, load_chains, load_items
-from .llm import PROFILES, ClaudeAtomizer, NoiseModel, SyntheticLLM
-from .metrics import Final, chain_metrics, premise_metrics, verdict_counts
+from .llm import PROFILES, ClaudeAtomizer, NoiseModel, OllamaAtomizer, SyntheticLLM
+from .metrics import Final, chain_metrics, formulation_counts, premise_metrics, verdict_counts
 
 ROOT = Path(__file__).resolve().parents[3]
 MODES = ("baseline", "discount", "grounded")
@@ -92,6 +93,22 @@ def to_markdown(title: str, summary: Dict[str, dict], n_runs: int, verdicts: Dic
     return "\n".join(lines) + "\n"
 
 
+def formulation_markdown(counts: Dict[str, int], n_items: int) -> str:
+    """How the LLM wrote each premise: the failure surface Omega's report measures."""
+    rows = [("Canonical statement", "canonical"), ("Relation swapped", "swapped"),
+            ("Other form (granularity, copula, naming)", "other"),
+            ("Unparseable output", "unparseable"), ("Refused", "refused")]
+    lines = ["### Premise formulation by the LLM", "", "| Outcome | Count | Share |", "|---|---|---|"]
+    for label, key in rows:
+        n = counts.get(key, 0)
+        lines.append(f"| {label} | {n} | {n / n_items:.1%} |")
+    believed = counts.get("belief_correct", 0), counts.get("belief_graded", 0)
+    if believed[1]:
+        lines += ["", f"Factual belief correct on {believed[0]} of {believed[1]} gradable premises "
+                      f"({believed[0] / believed[1]:.1%})."]
+    return "\n".join(lines) + "\n"
+
+
 def coverage_table(grounder: Grounder, items: Dict[str, Item]) -> str:
     """How the sources judged each canonical statement, against the gold label."""
     lines = ["### Source coverage on canonical statements", "",
@@ -116,18 +133,19 @@ def main(argv=None) -> None:
     parser.add_argument("--cassette", type=Path, default=ROOT / "benchmark" / "cassettes" / "sources.json")
     parser.add_argument("--datasets", type=Path, default=ROOT / "benchmark" / "datasets")
     parser.add_argument("--domains", nargs="+", default=["taxonomy", "onchain"])
-    parser.add_argument("--llm", choices=["synthetic", "claude"], default="synthetic")
+    parser.add_argument("--llm", choices=["synthetic", "claude", "ollama"], default="synthetic")
     parser.add_argument("--profiles", nargs="+", choices=sorted(PROFILES), default=["omega-docs", "mild"])
     parser.add_argument("--factual-error-rate", type=float, help="custom synthetic profile")
     parser.add_argument("--swap-rate", type=float, help="custom synthetic profile")
     parser.add_argument("--seeds", type=int, default=30)
-    parser.add_argument("--model", default="claude-opus-5-5")
+    parser.add_argument("--model", help="default: claude-opus-5-5 (claude), qwen2.5:7b (ollama)")
+    parser.add_argument("--ollama-url", default="http://127.0.0.1:11434")
     parser.add_argument("--effort", default="medium")
     parser.add_argument("--out", type=Path, default=ROOT / "benchmark" / "results")
     args = parser.parse_args(argv)
 
-    if args.llm == "claude" and args.transport == "replay":
-        parser.error("--llm claude writes new statements; use --transport record or live")
+    if args.llm != "synthetic" and args.transport == "replay":
+        parser.error(f"--llm {args.llm} writes new statements; use --transport record or live")
 
     items = load_items(args.datasets, args.domains)
     chains = load_chains(args.datasets, items)
@@ -143,14 +161,24 @@ def main(argv=None) -> None:
     sections = [f"# Grounding benchmark\n\nItems: {len(items)} ({', '.join(args.domains)}), "
                 f"chains: {len(chains)}. Sources: {args.transport} ({args.cassette.name}).\n"]
     results = {}
-    if args.llm == "claude":
-        llm = ClaudeAtomizer(args.model, args.effort)
+    if args.llm != "synthetic":
+        if args.llm == "claude":
+            llm = ClaudeAtomizer(args.model or "claude-opus-5-5", args.effort)
+            title = f"LLM: {llm.name} (effort {args.effort})"
+        else:
+            llm = OllamaAtomizer(args.model or "qwen2.5:7b", args.ollama_url)
+            title = f"LLM: {llm.name} (temperature 0)"
         finals = run_pipelines(llm, items, grounder)
         run = score(items, chains, finals)
-        results[llm.name] = {"summary": summarize([run]), "refusals": llm.refusals,
-                             "unparseable": llm.unparseable}
-        sections.append(to_markdown(f"LLM: {llm.name} (effort {args.effort})", summarize([run]), 1,
-                                    verdict_counts(finals["grounded"])))
+        formulation = formulation_counts(items, finals["baseline"])
+        formulation.update(refused=llm.refusals, unparseable=llm.unparseable)
+        results[llm.name] = {"summary": summarize([run]), "formulation": formulation,
+                             "premises": {i: {"emitted": fmt(f.emitted), "truth": str(f.truth),
+                                              "grounded": fmt(finals["grounded"][i].statement),
+                                              "verdict": finals["grounded"][i].verdict}
+                                          for i, f in finals["baseline"].items()}}
+        sections.append(to_markdown(title, summarize([run]), 1, verdict_counts(finals["grounded"])))
+        sections.append(formulation_markdown(formulation, len(items)))
     else:
         for name, noise in profiles.items():
             runs, verdicts = [], {}

@@ -2,14 +2,15 @@
 
 SyntheticLLM is a seeded noise model whose default rates are the ones Omega's
 docs/reference-failure-modes.md reports for its LLM premise step. It is a
-stress model, not a claim about any particular LLM; use ClaudeAtomizer to
-measure a real model on the same items.
+stress model, not a claim about any particular LLM; use ClaudeAtomizer or
+OllamaAtomizer to measure a real model on the same items.
 """
 
 from __future__ import annotations
 
 import json
 import random
+import urllib.request
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
@@ -75,6 +76,17 @@ SCHEMA = {
 }
 
 
+def _premise_from_json(text: str) -> Optional[Premise]:
+    try:
+        data = json.loads(text)
+        statement = parse(data["statement"])
+        f = min(1.0, max(0.0, float(data["frequency"])))
+        c = min(0.99, max(0.0, float(data["confidence"])))
+    except (ValueError, KeyError, TypeError, ParseError):
+        return None
+    return statement, Truth(f, c)
+
+
 class ClaudeAtomizer:
     """Asks Claude to atomize each item's sentence. Costs API tokens per item."""
 
@@ -101,13 +113,37 @@ class ClaudeAtomizer:
         if response.stop_reason == "refusal":
             self.refusals += 1
             return None
-        text = next((b.text for b in response.content if b.type == "text"), "")
-        try:
-            data = json.loads(text)
-            statement = parse(data["statement"])
-        except (ValueError, KeyError, ParseError):
+        premise = _premise_from_json(next((b.text for b in response.content if b.type == "text"), ""))
+        if premise is None:
             self.unparseable += 1
-            return None
-        f = min(1.0, max(0.0, float(data["frequency"])))
-        c = min(0.99, max(0.0, float(data["confidence"])))
-        return statement, Truth(f, c)
+        return premise
+
+
+class OllamaAtomizer:
+    """Asks a local open-weights model served by Ollama. No API key, no cost."""
+
+    def __init__(self, model: str = "qwen2.5:7b", url: str = "http://127.0.0.1:11434", timeout: float = 600.0):
+        self.model = model
+        self.url = url.rstrip("/")
+        self.timeout = timeout
+        self.name = f"ollama:{model}"
+        self.refusals = 0
+        self.unparseable = 0
+
+    def premise(self, item: Item) -> Optional[Premise]:
+        body = json.dumps({
+            "model": self.model,
+            "stream": False,
+            "format": SCHEMA,  # Ollama structured outputs: constrain to the JSON schema
+            "options": {"temperature": 0},
+            "messages": [{"role": "system", "content": SYSTEM_PROMPT},
+                         {"role": "user", "content": item.text}],
+        }).encode("utf-8")
+        req = urllib.request.Request(f"{self.url}/api/chat", data=body,
+                                     headers={"Content-Type": "application/json"}, method="POST")
+        with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+            reply = json.loads(resp.read().decode("utf-8"))
+        premise = _premise_from_json(reply.get("message", {}).get("content", ""))
+        if premise is None:
+            self.unparseable += 1
+        return premise
